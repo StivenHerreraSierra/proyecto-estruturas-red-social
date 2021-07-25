@@ -1,5 +1,7 @@
 package model;
 
+import estructuras.Nodo;
+
 import java.util.ArrayList;
 
 public class Vendedor {
@@ -35,5 +37,24 @@ public class Vendedor {
 
     public void setContactos(Vendedor[] contactos) {
         this.contactos = contactos;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if(object == null || getClass() != object.getClass())
+            return false;
+        if(object == this)
+            return true;
+
+        @SuppressWarnings("unchecked")
+        Vendedor vendedor = (Vendedor) object;
+        return vendedor.nombreVendedor.equals(this.nombreVendedor);
+    }
+
+    @Override
+    public String toString() {
+        return "Vendedor{" +
+                "nombreVendedor='" + nombreVendedor + '\'' +
+                '}';
     }
 }
