@@ -1,8 +1,6 @@
 package co.edu.estructuras.red.estructuras;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.*;
 
 import co.edu.estructuras.red.estructuras.exception.GrafoException;
 import co.edu.estructuras.red.estructuras.exception.NodoException;
@@ -11,7 +9,7 @@ import co.edu.estructuras.red.estructuras.exception.NodoException;
  * @author Stiven Herrera Sierra.
  * Representa el grafo dirigido.
 */
-public class Grafo<T> {
+public class Grafo<T> implements Iterable<T>{
 	private HashMap<String, Nodo<T>> nodos;
 	private Nodo<T> raiz;
 	
@@ -146,7 +144,76 @@ public class Grafo<T> {
 	public HashMap<String, Nodo<T>> getNodos() {
 		return nodos;
 	}
-	
+
+	public Grafo<T> copiarGrafo() throws GrafoException {
+		Grafo<T> grafoCopia = new Grafo<>();
+
+		Iterator<Nodo<T>> it = nodos.values().iterator();
+		T valorAux;
+		while(it.hasNext()) {
+			valorAux = it.next().getValor();
+			grafoCopia.agregarNodo(valorAux);
+		}
+
+		return grafoCopia;
+	}
+
+	public void eliminarNodos(Grafo<T> grafo) throws GrafoException, NodoException {
+		Iterator<Nodo<T>> it = grafo.getNodos().values().iterator();
+		T valorAux;
+		while(it.hasNext()) {
+			valorAux = it.next().getValor();
+			if(existeNodo(valorAux))
+				eliminarNodo(valorAux);
+		}
+	}
+
+	public ArrayList<T> asList() {
+		ArrayList<T> listaValores = new ArrayList<>();
+
+		Iterator<Nodo<T>> it = nodos.values().iterator();
+		T valorAux;
+		while(it.hasNext()) {
+			valorAux = it.next().getValor();
+			listaValores.add(valorAux);
+		}
+		return listaValores;
+	}
+
+	public T getNodo(String clave) {
+		T valor = null;
+		if(nodos.containsKey(clave))
+			valor = nodos.get(clave).getValor();
+
+		return valor;
+	}
+
+	public Grafo<T> getSubgrafo(T raiz) throws GrafoException, NodoException {
+		if(!existeNodo(raiz))
+			throw new GrafoException("Error obteniendo el subgrafo: el nodo no está en el grafo.");
+
+		Grafo<T> grafo = new Grafo<>();
+		grafo.agregarNodo(raiz);
+
+		Nodo<T> nodoRaiz = getNodo(raiz);
+		T valorAux;
+
+		for(Enlace<T> enlaceAux : nodoRaiz.getListaEnlaces()) {
+			valorAux = enlaceAux.getNodoDestino().getValor();
+			grafo.agregarNodo(valorAux);
+			grafo.conectarNodos(raiz, valorAux, enlaceAux.getPeso());
+		}
+
+		return grafo;
+	}
+
+	private Nodo<T> getNodo(T valor) throws GrafoException {
+		if(!existeNodo(valor))
+			throw new GrafoException("Error obteniendo el nodo: el nodo no está en el grafo.");
+
+		return getNodos().get(String.valueOf(valor));
+	}
+
 	@Override
 	public String toString() {
 		String resumen = "Grafo [nodos=" + nodos + ", raiz=" + raiz + "]\n";
@@ -159,5 +226,25 @@ public class Grafo<T> {
 		}
 		
 		return resumen;
+	}
+
+	@Override
+	public Iterator<T> iterator() {
+		return new GrafoIterator();
+	}
+
+	protected class GrafoIterator implements Iterator<T> {
+		ArrayList<Nodo<T>> valores = new ArrayList<>(nodos.values());
+		int indice = 0;
+
+		@Override
+		public boolean hasNext() {
+			return indice < valores.size();
+		}
+
+		@Override
+		public T next() {
+			return valores.get(indice++).getValor();
+		}
 	}
 }

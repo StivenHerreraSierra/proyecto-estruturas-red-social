@@ -5,12 +5,10 @@ import java.util.ArrayList;
 public class Vendedor {
     private String nombreVendedor;
     private ArrayList<Publicacion> publicaciones;
-    private Vendedor[] contactos;
 
     public Vendedor(String nombreVendedor) {
         this.nombreVendedor = nombreVendedor;
         this.publicaciones = new ArrayList<>();
-        this.contactos = new Vendedor[10];
     }
 
     public String getNombreVendedor() {
@@ -29,14 +27,6 @@ public class Vendedor {
         this.publicaciones = publicaciones;
     }
 
-    public Vendedor[] getContactos() {
-        return contactos;
-    }
-
-    public void setContactos(Vendedor[] contactos) {
-        this.contactos = contactos;
-    }
-
     @Override
     public boolean equals(Object object) {
         if(object == null || getClass() != object.getClass())
@@ -51,8 +41,6 @@ public class Vendedor {
 
     @Override
     public String toString() {
-        return "Vendedor{" +
-                "nombreVendedor='" + nombreVendedor + '\'' +
-                '}';
+        return nombreVendedor;
     }
 }

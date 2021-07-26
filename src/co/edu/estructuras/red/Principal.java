@@ -1,11 +1,15 @@
 package co.edu.estructuras.red;
 
 import co.edu.estructuras.red.controller.RedSocialController;
+import co.edu.estructuras.red.estructuras.Grafo;
 import co.edu.estructuras.red.estructuras.exception.GrafoException;
+import co.edu.estructuras.red.estructuras.exception.NodoException;
 import co.edu.estructuras.red.model.Vendedor;
+import co.edu.estructuras.red.model.exception.RedSocialException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -64,5 +68,43 @@ public class Principal extends Application {
         }
 
         return  vendedor;
+    }
+
+    public Grafo<Vendedor> getListaTodosVendedoresAgregar(Vendedor vendedor) {
+        Grafo<Vendedor> vendedoresGrafo = null;
+        try {
+            vendedoresGrafo = redSocial.getListaVendedoresAgregar(vendedor);
+        } catch (GrafoException | NodoException e) {
+            System.err.println("Error obteniendo la lista de vendedores disponibles para agregar: " + e.getMessage());
+        }
+        return vendedoresGrafo;
+    }
+
+    public Grafo<Vendedor> getListaVendedoresSugeridosAgregar(Vendedor vendedor) {
+        Grafo<Vendedor> vendedoresGrafo = null;
+        try {
+            vendedoresGrafo = redSocial.getListaSugeridosAgregar(vendedor);
+        } catch (GrafoException | NodoException e) {
+            System.err.println("Error obteniendo la lista de vendedores disponibles para agregar: " + e.getMessage());
+        }
+        return vendedoresGrafo;
+    }
+
+    public void agregarContacto(Vendedor usuario, Vendedor nuevoContacto) {
+        try {
+            redSocial.agregarContacto(usuario, nuevoContacto);
+        } catch (GrafoException | RedSocialException | NodoException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+    public void mostrarMensaje(String mensaje, Alert.AlertType miA, String titulo, String cabecera, String contenido, Stage escenarioPrincipal )
+    {
+        Alert alert = new Alert(miA);
+        alert.initOwner(escenarioPrincipal);
+        alert.setTitle(titulo);
+        alert.setHeaderText(cabecera);
+        alert.setContentText(contenido);
+        alert.showAndWait();
     }
 }

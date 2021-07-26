@@ -4,15 +4,28 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
 <AnchorPane prefHeight="657.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.estructuras.red.controller.VendedorTabController">
    <children>
-      <VBox alignment="TOP_CENTER" layoutX="47.0" layoutY="8.0" prefHeight="200.0" prefWidth="100.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox alignment="TOP_RIGHT" layoutX="47.0" layoutY="8.0" prefHeight="200.0" prefWidth="100.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <padding>
             <Insets bottom="30.0" left="30.0" right="30.0" top="40.0" />
          </padding>
          <children>
-            <Label fx:id="saludoLabel" text="Bienvenido" textAlignment="CENTER" />
+            <Label fx:id="usuarioLabel" text="Usuario: nombre" textAlignment="CENTER" />
+            <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <VBox alignment="TOP_CENTER" prefHeight="551.0" prefWidth="221.0">
+                     <children>
+                        <Button fx:id="actualizarButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="224.0" text="Actualizar" />
+                        <Label text="Todos" />
+                        <ListView fx:id="todosListView" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+                        <Label text="Sugeridos" />
+                        <ListView fx:id="sugeridosListView" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS" />
+               </children>
+            </HBox>
          </children>
       </VBox>
    </children>

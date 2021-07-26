@@ -11,7 +11,10 @@ public class PanelController {
     private Button registrarButton;
 
     public void setEventHandler(PanelListener listener) {
-        System.out.println("Ocurrió un evento.");
-        registrarButton.setOnAction(event -> listener.registrarListener(nombreTFD.getText()));
+        registrarButton.setOnAction(event -> {
+            String nombre = nombreTFD.getText();
+            nombreTFD.clear();
+            listener.registrarListener(nombre);
+        });
     }
 }
