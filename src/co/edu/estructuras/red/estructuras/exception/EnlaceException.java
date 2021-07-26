@@ -1,4 +1,4 @@
-package estructuras.exception;
+package co.edu.estructuras.red.estructuras.exception;
 
 /**
  * @author Stiven Herrera Sierra.

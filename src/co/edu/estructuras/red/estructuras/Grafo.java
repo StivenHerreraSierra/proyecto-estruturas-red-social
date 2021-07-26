@@ -1,10 +1,11 @@
-package estructuras;
+package co.edu.estructuras.red.estructuras;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import estructuras.exception.GrafoException;
-import estructuras.exception.NodoException;
+
+import co.edu.estructuras.red.estructuras.exception.GrafoException;
+import co.edu.estructuras.red.estructuras.exception.NodoException;
 
 /**
  * @author Stiven Herrera Sierra.

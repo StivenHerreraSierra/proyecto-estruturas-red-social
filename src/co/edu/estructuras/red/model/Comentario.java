@@ -1,4 +1,4 @@
-package model;
+package co.edu.estructuras.red.model;
 
 public class Comentario {
     private String mensaje;

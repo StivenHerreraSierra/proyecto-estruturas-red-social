@@ -1,4 +1,4 @@
-package model;
+package co.edu.estructuras.red.model;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

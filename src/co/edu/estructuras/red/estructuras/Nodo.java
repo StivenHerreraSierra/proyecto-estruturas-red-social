@@ -1,9 +1,9 @@
-package estructuras;
+package co.edu.estructuras.red.estructuras;
 
 import java.util.ArrayList;
 
-import estructuras.exception.EnlaceException;
-import estructuras.exception.NodoException;
+import co.edu.estructuras.red.estructuras.exception.EnlaceException;
+import co.edu.estructuras.red.estructuras.exception.NodoException;
 
 /**
  * @author Stiven Herrera Sierra.

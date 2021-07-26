@@ -1,4 +1,4 @@
-package estructuras;
+package co.edu.estructuras.red.estructuras;
 
 /**
  * @author Stiven Herrera Sierra.

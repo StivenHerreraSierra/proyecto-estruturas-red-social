@@ -1,6 +1,4 @@
-package model;
-
-import estructuras.Nodo;
+package co.edu.estructuras.red.model;
 
 import java.util.ArrayList;
 
