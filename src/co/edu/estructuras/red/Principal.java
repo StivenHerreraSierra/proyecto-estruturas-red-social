@@ -63,7 +63,7 @@ public class Principal extends Application {
         Vendedor vendedor = null;
         try {
             vendedor = redSocial.registrarVendedor(nombre);
-        } catch (GrafoException e) {
+        } catch (GrafoException | RedSocialException e) {
             System.err.println("Error registrando el vendedor: " + e.getMessage());
         }
 
@@ -107,6 +107,10 @@ public class Principal extends Application {
                     vendedor.getNombreVendedor() + ": " + e.getMessage());
         }
         return contactosGrafo;
+    }
+
+    public void publicarProducto(String nombre, String categoria) {
+        redSocial.publicarProducto(nombre, categoria);
     }
 
     public void mostrarMensaje(String mensaje, Alert.AlertType miA, String titulo, String cabecera, String contenido, Stage escenarioPrincipal )

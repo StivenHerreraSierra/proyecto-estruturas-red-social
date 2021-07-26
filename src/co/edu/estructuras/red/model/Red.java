@@ -14,7 +14,9 @@ public class Red {
         this.vendedores = new Grafo<>();
     }
 
-    public Vendedor registrarVendedor(String nombre) throws GrafoException {
+    public Vendedor registrarVendedor(String nombre) throws GrafoException, RedSocialException {
+        if(nombre == null || nombre.isEmpty())
+            throw new RedSocialException("Error registrando un vendedor: nombre no puede tener un valor vacío.");
         Vendedor vendedor = new Vendedor(nombre);
         vendedores.agregarNodo(vendedor);
 
@@ -72,5 +74,9 @@ public class Red {
         return "Red{" +
                 "vendedores=" + vendedores.toString() +
                 '}';
+    }
+
+    public void publicarProducto(String nombre, String categoria) {
+
     }
 }
