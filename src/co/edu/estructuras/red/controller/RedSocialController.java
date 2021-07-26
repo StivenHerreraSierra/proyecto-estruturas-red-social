@@ -71,6 +71,11 @@ public class RedSocialController {
             if(resultado == ButtonType.OK)
                 principal.agregarContacto(usuario, nuevoContacto);
         }
+
+        @Override
+        public Grafo<Vendedor> actualizarListaContactos(Vendedor usuario) {
+            return principal.getListaContactos(usuario);
+        }
     };
     private void crearMuro(Vendedor vendedor) {
         try {

@@ -98,6 +98,17 @@ public class Principal extends Application {
         }
     }
 
+    public Grafo<Vendedor> getListaContactos(Vendedor vendedor) {
+        Grafo<Vendedor> contactosGrafo = null;
+        try {
+            contactosGrafo = redSocial.getListaContactos(vendedor);
+        } catch (GrafoException | NodoException e) {
+            System.err.println("Error obteniendo la lista de contactos de " +
+                    vendedor.getNombreVendedor() + ": " + e.getMessage());
+        }
+        return contactosGrafo;
+    }
+
     public void mostrarMensaje(String mensaje, Alert.AlertType miA, String titulo, String cabecera, String contenido, Stage escenarioPrincipal )
     {
         Alert alert = new Alert(miA);

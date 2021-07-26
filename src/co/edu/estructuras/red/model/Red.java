@@ -53,6 +53,13 @@ public class Red {
         return grafoSugeridos;
     }
 
+    public Grafo<Vendedor> getListaContactos(Vendedor vendedor) throws GrafoException, NodoException {
+        Grafo<Vendedor> contactos = vendedores.getSubgrafo(vendedor);
+        contactos.eliminarNodo(vendedor);
+
+        return contactos;
+    }
+
     public void agregarContacto(Vendedor usuario, Vendedor nuevoContacto) throws GrafoException, NodoException, RedSocialException {
         if(usuario == null || nuevoContacto == null)
             throw new RedSocialException("Error agregando contacto: el usuario o el nuevo contacto es null -> " + usuario + " - " + nuevoContacto);

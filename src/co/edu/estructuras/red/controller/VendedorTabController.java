@@ -20,7 +20,12 @@ public class VendedorTabController {
     private ListView<Vendedor> sugeridosListView;
     private ObservableList<Vendedor> listaSugeridos;
     @FXML
+    private ListView<Vendedor> contactosListView;
+    private ObservableList<Vendedor> listaContactos;
+    @FXML
     private Button actualizarButton;
+    @FXML
+    private Button actualizarContactosButton;
 
     public void VendedorTabInitializer(Vendedor usuario, VendedorTabListener listener) {
         setUsuario(usuario);
@@ -42,6 +47,13 @@ public class VendedorTabController {
         sugeridosListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue != null)
                 listener.agregarContacto(usuario, newValue);
+        });
+
+        listaContactos = FXCollections.observableArrayList();
+        contactosListView.setItems(listaContactos);
+
+        actualizarContactosButton.setOnAction(event -> {
+            listaContactos.setAll(listener.actualizarListaContactos(usuario).asList());
         });
     }
 

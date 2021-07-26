@@ -24,6 +24,13 @@
                      </children>
                   </VBox>
                   <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS" />
+                  <VBox alignment="TOP_CENTER" maxHeight="551.0" maxWidth="221.0" minHeight="551.0" minWidth="221.0" prefHeight="551.0" prefWidth="221.0">
+                     <children>
+                        <Button fx:id="actualizarContactosButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="224.0" text="Actualizar" />
+                        <Label text="Contactos" />
+                        <ListView fx:id="contactosListView" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+                     </children>
+                  </VBox>
                </children>
             </HBox>
          </children>
