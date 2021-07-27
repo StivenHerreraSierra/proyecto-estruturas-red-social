@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane minHeight="170.0" prefHeight="170.0" prefWidth="398.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" >
+<AnchorPane minHeight="170.0" prefHeight="170.0" prefWidth="398.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.estructuras.red.controller.PublicarController" >
    <children>
       <VBox alignment="TOP_CENTER" layoutX="52.0" layoutY="35.0" prefHeight="190.0" prefWidth="398.0" spacing="15.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <padding>
@@ -23,15 +23,15 @@
               </rowConstraints>
                <children>
                   <Label text="Nombre:" />
-                  <TextField GridPane.columnIndex="1" />
+                  <TextField fx:id="nombreTFD" GridPane.columnIndex="1" />
                   <Label text="Categoria:" GridPane.rowIndex="1" />
-                  <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="categoriaTFD" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                </children>
             </GridPane>
             <HBox alignment="CENTER_RIGHT" prefHeight="32.0" prefWidth="378.0" spacing="15.0">
                <children>
-                  <Button mnemonicParsing="false" text="Publicar" />
-                  <Button mnemonicParsing="false" text="Limpiar" />
+                  <Button fx:id="publicarButton" mnemonicParsing="false" text="Publicar" />
+                  <Button mnemonicParsing="false" text="Limpiar" onAction="#limpiarCampos"/>
                </children>
             </HBox>
          </children>

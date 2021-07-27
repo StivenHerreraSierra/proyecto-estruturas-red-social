@@ -1,7 +1,7 @@
 package co.edu.estructuras.red;
 
 import co.edu.estructuras.red.controller.RedSocialController;
-import co.edu.estructuras.red.estructuras.Grafo;
+import co.edu.estructuras.red.estructuras.grafo.Grafo;
 import co.edu.estructuras.red.estructuras.exception.GrafoException;
 import co.edu.estructuras.red.estructuras.exception.NodoException;
 import co.edu.estructuras.red.model.Vendedor;
@@ -109,8 +109,13 @@ public class Principal extends Application {
         return contactosGrafo;
     }
 
-    public void publicarProducto(String nombre, String categoria) {
-        redSocial.publicarProducto(nombre, categoria);
+    public void registrarPublicacion(Vendedor usuario, String nombre, String categoria) {
+        try {
+            redSocial.registrarPublicacion(usuario, nombre, categoria);
+            usuario.getPublicaciones().inorden();
+        } catch (RedSocialException | NodoException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public void mostrarMensaje(String mensaje, Alert.AlertType miA, String titulo, String cabecera, String contenido, Stage escenarioPrincipal )

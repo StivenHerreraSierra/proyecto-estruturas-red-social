@@ -1,10 +1,10 @@
 package co.edu.estructuras.red.model;
 
-public class Producto {
+public class Producto implements Comparable<Producto>{
     private String categoriaProducto;
     private String nombreProducto;
 
-    public Producto(String categoriaProducto, String nombreProducto) {
+    public Producto(String nombreProducto, String categoriaProducto) {
         this.categoriaProducto = categoriaProducto;
         this.nombreProducto = nombreProducto;
     }
@@ -31,5 +31,10 @@ public class Producto {
                 "categoriaProducto='" + categoriaProducto + '\'' +
                 ", nombreProducto='" + nombreProducto + '\'' +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Producto o) {
+        return this.nombreProducto.compareTo(o.getNombreProducto());
     }
 }

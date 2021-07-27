@@ -1,7 +1,7 @@
 package co.edu.estructuras.red.controller;
 
 import co.edu.estructuras.red.Principal;
-import co.edu.estructuras.red.estructuras.Grafo;
+import co.edu.estructuras.red.estructuras.grafo.Grafo;
 import co.edu.estructuras.red.model.Vendedor;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,7 +13,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Optional;
 
 public class RedSocialController {
@@ -77,6 +76,15 @@ public class RedSocialController {
             return principal.getListaContactos(usuario);
         }
     };
+
+    private PublicarListener publicarListener = new PublicarListener() {
+        @Override
+        public boolean publicar(Vendedor usuario, String nombre, String categoria) {
+            principal.registrarPublicacion(usuario, nombre, categoria);
+            return true;
+        }
+    };
+
     private void crearMuro(Vendedor vendedor) {
         try {
             Tab panelTab = new Tab();
@@ -86,7 +94,7 @@ public class RedSocialController {
             loader.setLocation(getClass().getResource("../view/VendedorTabView.fxml"));
             AnchorPane view = loader.load();
             VendedorTabController controller = loader.getController();
-            controller.VendedorTabInitializer(vendedor, muroListener);
+            controller.VendedorTabInitializer(vendedor, muroListener, publicarListener);
 
             panelTab.setContent(view);
             pestanasRedSocial.getTabs().add(panelTab);

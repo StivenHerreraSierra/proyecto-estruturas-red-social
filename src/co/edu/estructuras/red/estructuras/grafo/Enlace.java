@@ -1,4 +1,4 @@
-package co.edu.estructuras.red.estructuras;
+package co.edu.estructuras.red.estructuras.grafo;
 
 /**
  * @author Stiven Herrera Sierra.

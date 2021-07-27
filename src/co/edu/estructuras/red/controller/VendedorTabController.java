@@ -1,13 +1,14 @@
 package co.edu.estructuras.red.controller;
 
 import co.edu.estructuras.red.model.Vendedor;
-import javafx.beans.InvalidationListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
+
+import java.io.IOException;
 
 public class VendedorTabController {
     private Vendedor usuario;
@@ -26,8 +27,10 @@ public class VendedorTabController {
     private Button actualizarButton;
     @FXML
     private Button actualizarContactosButton;
+    @FXML
+    private TitledPane panelPublicar;
 
-    public void VendedorTabInitializer(Vendedor usuario, VendedorTabListener listener) {
+    public void VendedorTabInitializer(Vendedor usuario, VendedorTabListener listenerVendedor, PublicarListener listenerPublicar) {
         setUsuario(usuario);
         listaTodos = FXCollections.observableArrayList();
         listaSugeridos = FXCollections.observableArrayList();
@@ -35,26 +38,28 @@ public class VendedorTabController {
         sugeridosListView.setItems(listaSugeridos);
 
         actualizarButton.setOnAction(event -> {
-            listaTodos.setAll(listener.actualizarListaTodos(usuario).asList());
-            listaSugeridos.setAll(listener.actualizarListaSugeridos(usuario).asList());
+            listaTodos.setAll(listenerVendedor.actualizarListaTodos(usuario).asList());
+            listaSugeridos.setAll(listenerVendedor.actualizarListaSugeridos(usuario).asList());
         });
 
         todosListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue != null)
-                listener.agregarContacto(usuario, newValue);
+                listenerVendedor.agregarContacto(usuario, newValue);
         });
 
         sugeridosListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue != null)
-                listener.agregarContacto(usuario, newValue);
+                listenerVendedor.agregarContacto(usuario, newValue);
         });
 
         listaContactos = FXCollections.observableArrayList();
         contactosListView.setItems(listaContactos);
 
         actualizarContactosButton.setOnAction(event -> {
-            listaContactos.setAll(listener.actualizarListaContactos(usuario).asList());
+            listaContactos.setAll(listenerVendedor.actualizarListaContactos(usuario).asList());
         });
+
+        cargarPublicarView(listenerPublicar);
     }
 
     private void setUsuario(Vendedor vendedor) {
@@ -62,4 +67,16 @@ public class VendedorTabController {
         this.usuarioLabel.setText("Usuario: " + vendedor.getNombreVendedor());
     }
 
+    private void cargarPublicarView(PublicarListener listener) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("../view/PublicarView.fxml"));
+            AnchorPane view = loader.load();
+            PublicarController controller = loader.getController();
+            controller.setListener(listener, usuario);
+            panelPublicar.setContent(view);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

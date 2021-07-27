@@ -1,6 +1,6 @@
 package co.edu.estructuras.red.model;
 
-import co.edu.estructuras.red.estructuras.Grafo;
+import co.edu.estructuras.red.estructuras.grafo.Grafo;
 import co.edu.estructuras.red.estructuras.exception.GrafoException;
 import co.edu.estructuras.red.estructuras.exception.NodoException;
 import co.edu.estructuras.red.model.exception.RedSocialException;
@@ -76,7 +76,10 @@ public class Red {
                 '}';
     }
 
-    public void publicarProducto(String nombre, String categoria) {
+    public void registrarPublicacion(Vendedor usuario, String nombre, String categoria) throws RedSocialException, NodoException {
+        if(!vendedores.existeNodo(usuario))
+            throw new RedSocialException("Error publicando producto: el usuario no está registrado -> " + usuario);
 
+        usuario.agregarPublicacion(nombre, categoria);
     }
 }

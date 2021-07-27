@@ -1,25 +1,25 @@
 package co.edu.estructuras.red.model;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-public class Publicacion {
-    private final SimpleDateFormat FORMATO_FECHA = new SimpleDateFormat("yyyy/MM/DD HH:mm:ss:SS");
-    private final String fechaPublicacion;
+public class Publicacion implements Comparable<Publicacion> {
+    private final DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+    private final LocalDateTime fechaPublicacion;
     private Producto productoDePublicacion;
     private ArrayList<Comentario> comentarioPublicacion;
     private ArrayList<Vendedor> listaMeGusta;
 
     public Publicacion(Producto productoDePublicacion) {
-        this.fechaPublicacion = FORMATO_FECHA.format(LocalDateTime.now());
+        this.fechaPublicacion = LocalDateTime.now();
         this.productoDePublicacion = productoDePublicacion;
         this.comentarioPublicacion = new ArrayList<>();
         this.listaMeGusta = new ArrayList<>();
     }
 
     public String getFechaPublicacion() {
-        return fechaPublicacion;
+        return FORMATO_FECHA.format(fechaPublicacion);
     }
 
     public Producto getProductoDePublicacion() {
@@ -44,5 +44,18 @@ public class Publicacion {
 
     public void setListaMeGusta(ArrayList<Vendedor> listaMeGusta) {
         this.listaMeGusta = listaMeGusta;
+    }
+
+    @Override
+    public int compareTo(Publicacion o) {
+        return this.productoDePublicacion.compareTo(o.getProductoDePublicacion());
+    }
+
+    @Override
+    public String toString() {
+        return "Publicacion{" +
+                "fechaPublicacion='" + getFechaPublicacion() + '\'' +
+                ", productoDePublicacion=" + productoDePublicacion +
+                '}';
     }
 }
