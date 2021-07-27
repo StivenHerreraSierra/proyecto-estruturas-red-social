@@ -2,6 +2,8 @@ package co.edu.estructuras.red.estructuras.arbol;
 
 import co.edu.estructuras.red.estructuras.exception.NodoException;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -11,7 +13,7 @@ import java.util.Queue;
  *
  * @param <T>
  */
-public class ArbolBinario<T extends Comparable<T>> {
+public class ArbolBinario<T extends Comparable<T>> implements Iterable<T> {
 
 	private Nodo<T> raiz;
 	private int peso;
@@ -29,15 +31,18 @@ public class ArbolBinario<T extends Comparable<T>> {
 	 * @param elemento Nuevo dato
 	 * @return true si lo pudo guardar
 	 */
-	public void agregar(T elemento) throws NodoException {
+	public boolean agregar(T elemento){
+		boolean seAgrego = true;
 		if(estaVacio()) {
 			raiz = new Nodo<>(elemento);
 			peso++;
 		}else if(raiz.agregar(elemento)){			
 			peso++;
 		} else {
-			throw new NodoException("Error agregar nodo al árbol: el nuevo elemento ya está registrado.");
+			seAgrego = false;
 		}
+
+		return seAgrego;
 	}
 	
 	/**
@@ -58,6 +63,30 @@ public class ArbolBinario<T extends Comparable<T>> {
 			System.out.print(n.getElemento()+"\t");
 			inorden(n.getDerecho());
 		}
+	}
+
+	/**
+	 * Realiza el recorrido inorden en el �rbol binario
+	 * @return Lista con los nodos del árbol.
+	 */
+	public ArrayList<T> getListaInorden() {
+		ArrayList<T> lista = new ArrayList<>();
+		inorden(raiz, lista);
+		return lista;
+	}
+
+	/**
+	 * Realiza el recorrido inorden en el �rbol binario
+	 * @param n Nodo ra�z
+	 * @return Lista con los nodos del árbol.
+	 */
+	private ArrayList<T> inorden(Nodo<T> n, ArrayList<T> lista) {
+		if(n!=null) {
+			inorden(n.getIzquierdo(), lista);
+			lista.add(n.getElemento());
+			inorden(n.getDerecho(), lista);
+		}
+		return lista;
 	}
 	
 	/**
@@ -450,6 +479,25 @@ public class ArbolBinario<T extends Comparable<T>> {
 	public int getPeso() {
 		return peso;
 	}
-	
-	
+
+
+	@Override
+	public Iterator<T> iterator() {
+		return new ArbolIterator();
+	}
+
+	protected class ArbolIterator implements Iterator<T> {
+		ArrayList<T> valores = getListaInorden();
+		int indice = 0;
+
+		@Override
+		public boolean hasNext() {
+			return indice < valores.size();
+		}
+
+		@Override
+		public T next() {
+			return valores.get(indice++);
+		}
+	}
 }

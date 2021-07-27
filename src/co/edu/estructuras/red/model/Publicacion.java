@@ -10,16 +10,22 @@ public class Publicacion implements Comparable<Publicacion> {
     private Producto productoDePublicacion;
     private ArrayList<Comentario> comentarioPublicacion;
     private ArrayList<Vendedor> listaMeGusta;
+    private final Vendedor propietario;
 
-    public Publicacion(Producto productoDePublicacion) {
+    public Publicacion(Producto productoDePublicacion, Vendedor propietario) {
         this.fechaPublicacion = LocalDateTime.now();
         this.productoDePublicacion = productoDePublicacion;
         this.comentarioPublicacion = new ArrayList<>();
         this.listaMeGusta = new ArrayList<>();
+        this.propietario = propietario;
     }
 
-    public String getFechaPublicacion() {
+    public String getFechaPublicacionString() {
         return FORMATO_FECHA.format(fechaPublicacion);
+    }
+
+    public LocalDateTime getFechaPublicacion() {
+        return fechaPublicacion;
     }
 
     public Producto getProductoDePublicacion() {
@@ -46,15 +52,23 @@ public class Publicacion implements Comparable<Publicacion> {
         this.listaMeGusta = listaMeGusta;
     }
 
+    public Vendedor getPropietario() {
+        return propietario;
+    }
+
+    public int getCantidadMeGusta() {
+        return listaMeGusta.size();
+    }
+
     @Override
     public int compareTo(Publicacion o) {
-        return this.productoDePublicacion.compareTo(o.getProductoDePublicacion());
+        return this.fechaPublicacion.compareTo(o.getFechaPublicacion());
     }
 
     @Override
     public String toString() {
         return "Publicacion{" +
-                "fechaPublicacion='" + getFechaPublicacion() + '\'' +
+                "fechaPublicacion='" + getFechaPublicacionString() + '\'' +
                 ", productoDePublicacion=" + productoDePublicacion +
                 '}';
     }

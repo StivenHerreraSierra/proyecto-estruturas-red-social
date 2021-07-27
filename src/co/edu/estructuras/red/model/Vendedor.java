@@ -1,14 +1,16 @@
 package co.edu.estructuras.red.model;
 
 import co.edu.estructuras.red.estructuras.arbol.ArbolBinario;
-import co.edu.estructuras.red.estructuras.exception.NodoException;
+import co.edu.estructuras.red.model.exception.VendedorException;
 
 public class Vendedor {
     private String nombreVendedor;
+    private ArbolBinario<Producto> productos;
     private ArbolBinario<Publicacion> publicaciones;
 
     public Vendedor(String nombreVendedor) {
         this.nombreVendedor = nombreVendedor;
+        this.productos = new ArbolBinario<>();
         this.publicaciones = new ArbolBinario<>();
     }
 
@@ -41,10 +43,15 @@ public class Vendedor {
         return nombreVendedor;
     }
 
-    public void agregarPublicacion(String nombre, String categoria) throws NodoException {
+    public void agregarPublicacion(String nombre, String categoria) throws VendedorException {
         Producto producto = new Producto(nombre, categoria);
-        Publicacion publicacion = new Publicacion(producto);
 
-        publicaciones.agregar(publicacion);
+        if(!productos.agregar(producto))
+            throw new VendedorException("Error agregando producto: el producto ya se ha registrado.");
+
+        Publicacion publicacion = new Publicacion(producto, this);
+
+        if(!publicaciones.agregar(publicacion))
+            throw new VendedorException("Error agregando publicación: la publicación ya se ha registrado.");
     }
 }

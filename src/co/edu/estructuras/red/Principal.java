@@ -1,11 +1,14 @@
 package co.edu.estructuras.red;
 
 import co.edu.estructuras.red.controller.RedSocialController;
+import co.edu.estructuras.red.estructuras.arbol.ArbolBinario;
 import co.edu.estructuras.red.estructuras.grafo.Grafo;
 import co.edu.estructuras.red.estructuras.exception.GrafoException;
 import co.edu.estructuras.red.estructuras.exception.NodoException;
+import co.edu.estructuras.red.model.Publicacion;
 import co.edu.estructuras.red.model.Vendedor;
 import co.edu.estructuras.red.model.exception.RedSocialException;
+import co.edu.estructuras.red.model.exception.VendedorException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -113,9 +116,19 @@ public class Principal extends Application {
         try {
             redSocial.registrarPublicacion(usuario, nombre, categoria);
             usuario.getPublicaciones().inorden();
-        } catch (RedSocialException | NodoException e) {
+        } catch (RedSocialException | VendedorException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public ArbolBinario<Publicacion> getPublicacionesVendedor(Vendedor vendedor) {
+        ArbolBinario<Publicacion> publicaciones = new ArbolBinario<>();
+        try {
+            publicaciones = redSocial.getPublicacionesVendedor(vendedor);
+        } catch (GrafoException | NodoException e) {
+            System.err.println(e.getMessage());
+        }
+        return publicaciones;
     }
 
     public void mostrarMensaje(String mensaje, Alert.AlertType miA, String titulo, String cabecera, String contenido, Stage escenarioPrincipal )

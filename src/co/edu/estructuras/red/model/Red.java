@@ -1,10 +1,11 @@
 package co.edu.estructuras.red.model;
 
+import co.edu.estructuras.red.estructuras.arbol.ArbolBinario;
 import co.edu.estructuras.red.estructuras.grafo.Grafo;
 import co.edu.estructuras.red.estructuras.exception.GrafoException;
 import co.edu.estructuras.red.estructuras.exception.NodoException;
 import co.edu.estructuras.red.model.exception.RedSocialException;
-
+import co.edu.estructuras.red.model.exception.VendedorException;
 import java.util.Iterator;
 
 public class Red {
@@ -14,9 +15,13 @@ public class Red {
         this.vendedores = new Grafo<>();
     }
 
-    public Vendedor registrarVendedor(String nombre) throws GrafoException, RedSocialException {
+    public Vendedor registrarVendedor(String nombre) throws RedSocialException, GrafoException {
         if(nombre == null || nombre.isEmpty())
-            throw new RedSocialException("Error registrando un vendedor: nombre no puede tener un valor vacío.");
+            throw new RedSocialException("Error registrando un vendedor: nombre no puede tener un valor vacio.");
+
+
+        if(vendedores.size() > 10)
+            throw new RedSocialException("Error registrando contacto: la red ya alcanzo los 10 usuarios.");
         Vendedor vendedor = new Vendedor(nombre);
         vendedores.agregarNodo(vendedor);
 
@@ -76,10 +81,27 @@ public class Red {
                 '}';
     }
 
-    public void registrarPublicacion(Vendedor usuario, String nombre, String categoria) throws RedSocialException, NodoException {
+    public void registrarPublicacion(Vendedor usuario, String nombre, String categoria) throws RedSocialException, VendedorException {
         if(!vendedores.existeNodo(usuario))
             throw new RedSocialException("Error publicando producto: el usuario no está registrado -> " + usuario);
 
         usuario.agregarPublicacion(nombre, categoria);
+    }
+
+    public ArbolBinario<Publicacion> getPublicacionesVendedor(Vendedor vendedor) throws GrafoException, NodoException {
+        ArbolBinario<Publicacion> publicaciones = new ArbolBinario<>();
+
+        generarArbolPublicaciones(publicaciones, vendedor.getPublicaciones());
+
+        for(Vendedor contacto : getListaContactos(vendedor))
+            generarArbolPublicaciones(publicaciones, contacto.getPublicaciones());
+
+        return publicaciones;
+    }
+
+    private void generarArbolPublicaciones(ArbolBinario<Publicacion> arbol, ArbolBinario<Publicacion> publicaciones) {
+        Iterator<Publicacion> it = publicaciones.iterator();
+        while(it.hasNext())
+            arbol.agregar(it.next());
     }
 }

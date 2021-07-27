@@ -31,10 +31,24 @@
                               <content>
                               </content>
                             </TitledPane>
-                            <TitledPane animated="false" collapsible="false" text="Publicaciones">
-                              <content>
-                                <AnchorPane minHeight="400.0" minWidth="0.0" prefHeight="400.0" prefWidth="200.0" />
-                              </content>
+                            <TitledPane animated="false" text="Publicaciones">
+                                 <content>
+                                    <BorderPane prefHeight="200.0" prefWidth="200.0">
+                                       <center>
+                                          <ScrollPane fx:id="muroScrollPane" fitToHeight="true" fitToWidth="true" prefHeight="477.0" prefWidth="388.0" BorderPane.alignment="CENTER">
+                                             <content>
+                                                 <BorderPane prefHeight="200.0" prefWidth="200.0">
+                                                     <center>
+                                                         <VBox fx:id="panelPublicaciones" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+
+                                                         </VBox>
+                                                     </center>
+                                                 </BorderPane>
+                                             </content>
+                                          </ScrollPane>
+                                       </center>
+                                    </BorderPane>
+                                 </content>
                             </TitledPane>
                           </panes>
                         </Accordion>
