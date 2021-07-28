@@ -83,6 +83,21 @@ public class RedSocialController {
         public void agregarContactoBuscado(Vendedor usuario, String nombre) {
             principal.agregarContactoBuscado(usuario, nombre);
         }
+
+        @Override
+        public boolean darMeGusta(Vendedor usuario, Publicacion publicacion) {
+            return principal.darMeGusta(usuario, publicacion);
+        }
+
+        @Override
+        public void comentar(Vendedor usuario, Publicacion publicacion, String nuevoComentario) {
+
+        }
+
+        @Override
+        public boolean meGusta(Publicacion publicacion, Vendedor usuario) {
+            return principal.meGusta(publicacion, usuario);
+        }
     };
 
     private PublicarListener publicarListener = new PublicarListener() {
@@ -90,19 +105,6 @@ public class RedSocialController {
         public boolean publicar(Vendedor usuario, String nombre, String categoria) {
             principal.registrarPublicacion(usuario, nombre, categoria);
             return true;
-        }
-    };
-
-    private PublicacionListener publicacionListener = new PublicacionListener() {
-
-        @Override
-        public boolean darMeGusta(Vendedor usuario, Publicacion publicacion) {
-            return false;
-        }
-
-        @Override
-        public void comentar(Publicacion publicacion, String nuevoComentario) {
-
         }
     };
 
@@ -115,7 +117,7 @@ public class RedSocialController {
             loader.setLocation(getClass().getResource("../view/VendedorTabView.fxml"));
             AnchorPane view = loader.load();
             VendedorTabController controller = loader.getController();
-            controller.VendedorTabInitializer(vendedor, muroListener, publicarListener, publicacionListener);
+            controller.VendedorTabInitializer(vendedor, muroListener, publicarListener);
 
             panelTab.setContent(view);
             pestanasRedSocial.getTabs().add(panelTab);

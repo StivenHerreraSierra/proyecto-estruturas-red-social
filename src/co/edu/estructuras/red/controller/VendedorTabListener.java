@@ -17,4 +17,10 @@ public interface VendedorTabListener {
     public ArbolBinario<Publicacion> actualizarMuro(Vendedor usuario);
 
     public void agregarContactoBuscado(Vendedor usuario, String nombre);
+
+    public boolean darMeGusta(Vendedor usuario, Publicacion publicacion);
+
+    public void comentar(Vendedor usuario, Publicacion publicacion, String nuevoComentario);
+
+    boolean meGusta(Publicacion publicacion, Vendedor usuario);
 }

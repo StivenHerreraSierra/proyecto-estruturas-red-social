@@ -121,4 +121,12 @@ public class Red {
 
         return encontrado;
     }
+
+    public boolean darMeGusta(Vendedor usuario, Publicacion publicacion) {
+        return publicacion.darMeGusta(usuario);
+    }
+
+    public boolean meGusta(Publicacion publicacion, Vendedor usuario) {
+        return publicacion.dioMeGusta(usuario);
+    }
 }

@@ -35,14 +35,29 @@ public class VendedorTabController {
     private TitledPane panelPublicar;
     @FXML
     private VBox panelPublicaciones;
-    private PublicacionListener publicacionListener;
     @FXML
     private TextField buscadorVendedorTFD;
     @FXML
     private Button buscarVendedorButton;
 
+    private VendedorTabListener listenerVendedor;
+
+    private PublicacionListener listenerPublicacion = new PublicacionListener() {
+        @Override
+        public boolean darMeGusta(Publicacion publicacion) {
+            return listenerVendedor.darMeGusta(usuario, publicacion);
+        }
+
+        @Override
+        public void comentar(Publicacion publicacion, String nuevoComentario) {
+
+        }
+    };
+
     public void VendedorTabInitializer(Vendedor usuario, VendedorTabListener listenerVendedor,
-                                       PublicarListener listenerPublicar, PublicacionListener listenerPublicacion) {
+                                       PublicarListener listenerPublicar) {
+        this.listenerVendedor = listenerVendedor;
+
         setUsuario(usuario);
         listaTodos = FXCollections.observableArrayList();
         listaSugeridos = FXCollections.observableArrayList();
@@ -52,7 +67,7 @@ public class VendedorTabController {
         actualizarButton.setOnAction(event -> {
             listaTodos.setAll(listenerVendedor.actualizarListaTodos(usuario).asList());
             listaSugeridos.setAll(listenerVendedor.actualizarListaSugeridos(usuario).asList());
-            cargarPublicaciones(listenerVendedor.actualizarMuro(usuario));
+            cargarPublicaciones(listenerVendedor.actualizarMuro(usuario), listenerPublicacion);
         });
 
         todosListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -79,8 +94,7 @@ public class VendedorTabController {
 
         cargarPublicarView(listenerPublicar);
 
-        this.publicacionListener = listenerPublicacion;
-        cargarPublicaciones(listenerVendedor.actualizarMuro(usuario));
+        cargarPublicaciones(listenerVendedor.actualizarMuro(usuario), listenerPublicacion);
     }
 
     private void setUsuario(Vendedor vendedor) {
@@ -101,21 +115,24 @@ public class VendedorTabController {
         }
     }
 
-    private void cargarPublicaciones(ArbolBinario<Publicacion> publicaciones) {
+    private void cargarPublicaciones(ArbolBinario<Publicacion> publicaciones, PublicacionListener publicacionListener) {
         ArrayList<Publicacion> publicacionesOrdenadas = publicaciones.getListaInorden();
+        boolean meGustaAux;
 
         panelPublicaciones.getChildren().clear();
-        for(Publicacion publicacion : publicacionesOrdenadas)
-            cargarPublicacion(publicacionListener, publicacion);
+        for(Publicacion publicacion : publicacionesOrdenadas) {
+            meGustaAux = listenerVendedor.meGusta(publicacion, usuario);
+            cargarPublicacion(publicacionListener, publicacion, meGustaAux);
+        }
     }
 
-    private void cargarPublicacion(PublicacionListener listener, Publicacion publicacion) {
+    private void cargarPublicacion(PublicacionListener listener, Publicacion publicacion, boolean meGustaActivado) {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("../view/PublicacionView.fxml"));
             AnchorPane view = loader.load();
             PublicacionController controller = loader.getController();
-            controller.publicacionInitializer(listener, publicacion);
+            controller.publicacionInitializer(listener, publicacion, meGustaActivado);
             panelPublicaciones.getChildren().add(view);
         } catch (IOException e) {
             e.printStackTrace();

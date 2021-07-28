@@ -25,7 +25,7 @@ public class PublicacionController {
 
     private Publicacion publicacion;
 
-    public void publicacionInitializer(PublicacionListener listener, Publicacion publicacion) {
+    public void publicacionInitializer(PublicacionListener listener, Publicacion publicacion, boolean meGustaActivado) {
         Vendedor propietario = publicacion.getPropietario();
         Producto producto = publicacion.getProductoDePublicacion();
 
@@ -35,10 +35,18 @@ public class PublicacionController {
         categoriaProducto.setText("Categoria: " + producto.getCategoriaProducto());
         setTotalMeGusta(publicacion.getCantidadMeGusta());
 
+        darEstiloBotonMeGusta(meGustaActivado);
         meGustaButton.setOnAction(event -> {
-            if(listener.darMeGusta(propietario, publicacion))
-                setTotalMeGusta(publicacion.getCantidadMeGusta());
+            darEstiloBotonMeGusta(listener.darMeGusta(publicacion));
+            setTotalMeGusta(publicacion.getCantidadMeGusta());
         });
+    }
+
+    private void darEstiloBotonMeGusta(boolean meGustaActivado) {
+        if(meGustaActivado)
+            meGustaButton.setStyle("-fx-background-color: #00C1D4;");
+        else
+            meGustaButton.setStyle("-fx-background-color: #EEEEEE;");
     }
 
     public void setTotalMeGusta(int totalMeGusta) {

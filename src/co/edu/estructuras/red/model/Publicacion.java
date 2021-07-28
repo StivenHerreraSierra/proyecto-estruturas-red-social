@@ -1,5 +1,7 @@
 package co.edu.estructuras.red.model;
 
+import co.edu.estructuras.red.estructuras.lista.ListaDoble;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -8,15 +10,15 @@ public class Publicacion implements Comparable<Publicacion> {
     private final DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
     private final LocalDateTime fechaPublicacion;
     private Producto productoDePublicacion;
-    private ArrayList<Comentario> comentarioPublicacion;
-    private ArrayList<Vendedor> listaMeGusta;
+    private ListaDoble<Comentario> comentarioPublicacion;
+    private ListaDoble<Vendedor> listaMeGusta;
     private final Vendedor propietario;
 
     public Publicacion(Producto productoDePublicacion, Vendedor propietario) {
         this.fechaPublicacion = LocalDateTime.now();
         this.productoDePublicacion = productoDePublicacion;
-        this.comentarioPublicacion = new ArrayList<>();
-        this.listaMeGusta = new ArrayList<>();
+        this.comentarioPublicacion = new ListaDoble<>();
+        this.listaMeGusta = new ListaDoble<>();
         this.propietario = propietario;
     }
 
@@ -36,19 +38,19 @@ public class Publicacion implements Comparable<Publicacion> {
         this.productoDePublicacion = productoDePublicacion;
     }
 
-    public ArrayList<Comentario> getComentarioPublicacion() {
+    public ListaDoble<Comentario> getComentarioPublicacion() {
         return comentarioPublicacion;
     }
 
-    public void setComentarioPublicacion(ArrayList<Comentario> comentarioPublicacion) {
+    public void setComentarioPublicacion(ListaDoble<Comentario> comentarioPublicacion) {
         this.comentarioPublicacion = comentarioPublicacion;
     }
 
-    public ArrayList<Vendedor> getListaMeGusta() {
+    public ListaDoble<Vendedor> getListaMeGusta() {
         return listaMeGusta;
     }
 
-    public void setListaMeGusta(ArrayList<Vendedor> listaMeGusta) {
+    public void setListaMeGusta(ListaDoble<Vendedor> listaMeGusta) {
         this.listaMeGusta = listaMeGusta;
     }
 
@@ -57,7 +59,7 @@ public class Publicacion implements Comparable<Publicacion> {
     }
 
     public int getCantidadMeGusta() {
-        return listaMeGusta.size();
+        return listaMeGusta.getTamanio();
     }
 
     @Override
@@ -71,5 +73,19 @@ public class Publicacion implements Comparable<Publicacion> {
                 "fechaPublicacion='" + getFechaPublicacionString() + '\'' +
                 ", productoDePublicacion=" + productoDePublicacion +
                 '}';
+    }
+
+    public boolean darMeGusta(Vendedor usuario) {
+        if(listaMeGusta.contains(usuario)) {
+            listaMeGusta.eliminar(usuario);
+            return false;
+        }
+
+        listaMeGusta.agregarfinal(usuario);
+        return true;
+    }
+
+    public boolean dioMeGusta(Vendedor usuario) {
+        return listaMeGusta.contains(usuario);
     }
 }

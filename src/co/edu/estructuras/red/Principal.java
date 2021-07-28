@@ -169,4 +169,12 @@ public class Principal extends Application {
         alert.setContentText(contenido);
         alert.showAndWait();
     }
+
+    public boolean darMeGusta(Vendedor usuario, Publicacion publicacion) {
+         return redSocial.darMeGusta(usuario, publicacion);
+    }
+
+    public boolean meGusta(Publicacion publicacion, Vendedor usuario) {
+        return redSocial.meGusta(publicacion, usuario);
+    }
 }
