@@ -5,6 +5,7 @@ import co.edu.estructuras.red.estructuras.lista.ListaDoble;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Publicacion implements Comparable<Publicacion> {
     private final DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
@@ -87,5 +88,15 @@ public class Publicacion implements Comparable<Publicacion> {
 
     public boolean dioMeGusta(Vendedor usuario) {
         return listaMeGusta.contains(usuario);
+    }
+
+    public String getListaMeGustaString() {
+        String lista = "";
+        Iterator<Vendedor> it = listaMeGusta.iterator();
+
+        while(it.hasNext())
+            lista += it.next().getNombreVendedor() + "\n";
+
+        return lista;
     }
 }

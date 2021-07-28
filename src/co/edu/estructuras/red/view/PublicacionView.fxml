@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.*?>
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -19,7 +20,10 @@
             <Label fx:id="categoriaProducto" text="[Categoría producto]" />
             <HBox alignment="CENTER_RIGHT" prefHeight="29.0" prefWidth="365.0" spacing="8.0">
                <children>
-                  <Label fx:id="totalMeGusta" text="0" />
+                  <Label fx:id="totalMeGusta" text="0">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></Label>
                   <Button fx:id="meGustaButton" mnemonicParsing="false" text="Me gusta" />
                   <Button fx:id="comentarButton" mnemonicParsing="false" text="Comentar" />
                </children>

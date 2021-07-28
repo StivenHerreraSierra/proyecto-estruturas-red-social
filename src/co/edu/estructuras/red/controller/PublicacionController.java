@@ -6,6 +6,7 @@ import co.edu.estructuras.red.model.Vendedor;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 
 public class PublicacionController {
     @FXML
@@ -22,12 +23,18 @@ public class PublicacionController {
     private Button meGustaButton;
     @FXML
     private Button comentarButton;
+    @FXML
+    private Tooltip tooltipMeGusta;
 
     private Publicacion publicacion;
 
     public void publicacionInitializer(PublicacionListener listener, Publicacion publicacion, boolean meGustaActivado) {
+        this.publicacion = publicacion;
         Vendedor propietario = publicacion.getPropietario();
         Producto producto = publicacion.getProductoDePublicacion();
+        tooltipMeGusta = new Tooltip();
+        totalMeGusta.setTooltip(tooltipMeGusta);
+        cargarTootip();
 
         usuario.setText(propietario.getNombreVendedor());
         fecha.setText(publicacion.getFechaPublicacionString());
@@ -39,6 +46,7 @@ public class PublicacionController {
         meGustaButton.setOnAction(event -> {
             darEstiloBotonMeGusta(listener.darMeGusta(publicacion));
             setTotalMeGusta(publicacion.getCantidadMeGusta());
+            cargarTootip();
         });
     }
 
@@ -51,5 +59,9 @@ public class PublicacionController {
 
     public void setTotalMeGusta(int totalMeGusta) {
         this.totalMeGusta.setText(String.valueOf(totalMeGusta));
+    }
+
+    public void cargarTootip() {
+        tooltipMeGusta.setText(publicacion.getListaMeGustaString());
     }
 }
