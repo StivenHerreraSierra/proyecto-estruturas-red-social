@@ -1,6 +1,7 @@
 package co.edu.estructuras.red.model;
 
 import co.edu.estructuras.red.estructuras.arbol.ArbolBinario;
+import co.edu.estructuras.red.model.exception.PublicacionException;
 import co.edu.estructuras.red.model.exception.VendedorException;
 
 public class Vendedor {
@@ -53,5 +54,9 @@ public class Vendedor {
 
         if(!publicaciones.agregar(publicacion))
             throw new VendedorException("Error agregando publicación: la publicación ya se ha registrado.");
+    }
+
+    public void comentarPublicacion(String comentario, Publicacion publicacion, Vendedor usuario) throws PublicacionException {
+        publicacion.agregarComentario(comentario, usuario);
     }
 }

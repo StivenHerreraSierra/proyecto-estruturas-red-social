@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="458.0" prefWidth="412.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.estructuras.red.controller.PanelComentarioController">
+   <children>
+      <VBox alignment="TOP_CENTER" layoutX="200.0" layoutY="27.0" prefHeight="400.0" prefWidth="411.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <TextArea fx:id="comentariosTextArea" editable="false" prefHeight="348.0" prefWidth="402.0" wrapText="true" VBox.vgrow="ALWAYS" />
+            <Separator prefWidth="200.0" />
+            <TextArea fx:id="campoComentarioTextArea" prefHeight="1.0" prefWidth="402.0" wrapText="true" VBox.vgrow="ALWAYS" />
+            <Button mnemonicParsing="false" onAction="#publicarComentario" prefHeight="26.0" prefWidth="169.0" text="Publicar">
+               <VBox.margin>
+                  <Insets top="3.0" />
+               </VBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </VBox>
+   </children>
+</AnchorPane>

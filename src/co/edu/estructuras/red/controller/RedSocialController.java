@@ -98,6 +98,11 @@ public class RedSocialController {
         public boolean meGusta(Publicacion publicacion, Vendedor usuario) {
             return principal.meGusta(publicacion, usuario);
         }
+
+        @Override
+        public void mostrarComentarios(Publicacion publicacion, Vendedor usuario) {
+            principal.mostrarVentanaComentarios(publicacion, usuario);
+        }
     };
 
     private PublicarListener publicarListener = new PublicarListener() {

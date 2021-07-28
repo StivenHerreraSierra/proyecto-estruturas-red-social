@@ -1,5 +1,6 @@
 package co.edu.estructuras.red;
 
+import co.edu.estructuras.red.controller.PanelComentarioController;
 import co.edu.estructuras.red.controller.RedSocialController;
 import co.edu.estructuras.red.estructuras.arbol.ArbolBinario;
 import co.edu.estructuras.red.estructuras.grafo.Grafo;
@@ -7,6 +8,7 @@ import co.edu.estructuras.red.estructuras.exception.GrafoException;
 import co.edu.estructuras.red.estructuras.exception.NodoException;
 import co.edu.estructuras.red.model.Publicacion;
 import co.edu.estructuras.red.model.Vendedor;
+import co.edu.estructuras.red.model.exception.PublicacionException;
 import co.edu.estructuras.red.model.exception.RedSocialException;
 import co.edu.estructuras.red.model.exception.VendedorException;
 import javafx.application.Application;
@@ -16,6 +18,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import co.edu.estructuras.red.model.Red;
 import java.io.IOException;
@@ -23,6 +26,7 @@ import java.util.Optional;
 
 public class Principal extends Application {
     private BorderPane root;
+    private Stage primaryStage;
     public static void main(String[] args) {
         launch(args);
     }
@@ -31,11 +35,13 @@ public class Principal extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        this.primaryStage = primaryStage;
         this.redSocial = new Red();
 
         loadRoot();
         loadRedSocialView();
         Scene scene = new Scene(root);
+
         primaryStage.setTitle("Red Social");
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -47,7 +53,7 @@ public class Principal extends Application {
             loader.setLocation(getClass().getResource("view/RootLayout.fxml"));
             root = loader.load();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println(e.getMessage());
         }
     }
 
@@ -60,7 +66,7 @@ public class Principal extends Application {
             controller.setPrincipal(this);
             root.setCenter(view);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println(e.getMessage());
         }
     }
 
@@ -146,7 +152,7 @@ public class Principal extends Application {
             redSocial.registrarPublicacion(usuario, nombre, categoria);
             usuario.getPublicaciones().inorden();
         } catch (RedSocialException | VendedorException e) {
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
         }
     }
 
@@ -176,5 +182,42 @@ public class Principal extends Application {
 
     public boolean meGusta(Publicacion publicacion, Vendedor usuario) {
         return redSocial.meGusta(publicacion, usuario);
+    }
+
+    public void mostrarVentanaComentarios(Publicacion publicacion, Vendedor usuario) {
+        Stage secundaryStage = new Stage();
+        BorderPane root = new BorderPane();
+        Scene scene = new Scene(root);
+
+        cargarVentanaComentarios(root, publicacion, usuario);
+
+        secundaryStage.setTitle("Comentarios");
+        secundaryStage.setScene(scene);
+        secundaryStage.initModality(Modality.APPLICATION_MODAL);
+        secundaryStage.showAndWait();
+    }
+
+    private void cargarVentanaComentarios(BorderPane root, Publicacion publicacion, Vendedor usuario) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("view/PanelComentariosView.fxml"));
+            AnchorPane view = loader.load();
+            PanelComentarioController controller = loader.getController();
+            controller.setPrincipal(this);
+            controller.panelComentarioInitializer(publicacion, usuario);
+            root.setCenter(view);
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+    public boolean publicarComentario(String comentario, Publicacion publicacion, Vendedor usuario) {
+        try {
+            redSocial.comentar(comentario, publicacion, usuario);
+            return true;
+        } catch (PublicacionException | RedSocialException e) {
+            System.err.println(e.getMessage());
+        }
+        return false;
     }
 }

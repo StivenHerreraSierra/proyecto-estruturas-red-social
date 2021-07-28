@@ -23,4 +23,6 @@ public interface VendedorTabListener {
     public void comentar(Vendedor usuario, Publicacion publicacion, String nuevoComentario);
 
     boolean meGusta(Publicacion publicacion, Vendedor usuario);
+
+    public void mostrarComentarios(Publicacion publicacion, Vendedor usuario);
 }

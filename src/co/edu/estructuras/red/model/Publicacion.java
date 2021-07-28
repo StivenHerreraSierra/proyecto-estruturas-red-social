@@ -1,24 +1,24 @@
 package co.edu.estructuras.red.model;
 
 import co.edu.estructuras.red.estructuras.lista.ListaDoble;
+import co.edu.estructuras.red.model.exception.PublicacionException;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Iterator;
 
 public class Publicacion implements Comparable<Publicacion> {
     private final DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
     private final LocalDateTime fechaPublicacion;
     private Producto productoDePublicacion;
-    private ListaDoble<Comentario> comentarioPublicacion;
+    private ListaDoble<Comentario> listaComentarios;
     private ListaDoble<Vendedor> listaMeGusta;
     private final Vendedor propietario;
 
     public Publicacion(Producto productoDePublicacion, Vendedor propietario) {
         this.fechaPublicacion = LocalDateTime.now();
         this.productoDePublicacion = productoDePublicacion;
-        this.comentarioPublicacion = new ListaDoble<>();
+        this.listaComentarios = new ListaDoble<>();
         this.listaMeGusta = new ListaDoble<>();
         this.propietario = propietario;
     }
@@ -39,12 +39,12 @@ public class Publicacion implements Comparable<Publicacion> {
         this.productoDePublicacion = productoDePublicacion;
     }
 
-    public ListaDoble<Comentario> getComentarioPublicacion() {
-        return comentarioPublicacion;
+    public ListaDoble<Comentario> getListaComentarios() {
+        return listaComentarios;
     }
 
-    public void setComentarioPublicacion(ListaDoble<Comentario> comentarioPublicacion) {
-        this.comentarioPublicacion = comentarioPublicacion;
+    public void setListaComentarios(ListaDoble<Comentario> listaComentarios) {
+        this.listaComentarios = listaComentarios;
     }
 
     public ListaDoble<Vendedor> getListaMeGusta() {
@@ -98,5 +98,23 @@ public class Publicacion implements Comparable<Publicacion> {
             lista += it.next().getNombreVendedor() + "\n";
 
         return lista;
+    }
+
+    public String getListaComentariosString() {
+        String lista = "";
+        Iterator<Comentario> it = listaComentarios.iterator();
+
+        while(it.hasNext())
+            lista += it.next().toString() + "\n\n";
+
+        return lista;
+    }
+
+    public void agregarComentario(String mensaje, Vendedor usuario) throws PublicacionException {
+        if(mensaje.isEmpty())
+            throw new PublicacionException("Error comentando publicacion: el comentario no puede estar vacio.");
+
+        Comentario comentario = new Comentario(mensaje, usuario, this);
+        listaComentarios.agregarfinal(comentario);
     }
 }

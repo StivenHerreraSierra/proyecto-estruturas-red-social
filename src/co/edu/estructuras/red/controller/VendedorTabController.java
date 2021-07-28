@@ -49,8 +49,8 @@ public class VendedorTabController {
         }
 
         @Override
-        public void comentar(Publicacion publicacion, String nuevoComentario) {
-
+        public void comentar(Publicacion publicacion) {
+            listenerVendedor.mostrarComentarios(publicacion, usuario);
         }
     };
 

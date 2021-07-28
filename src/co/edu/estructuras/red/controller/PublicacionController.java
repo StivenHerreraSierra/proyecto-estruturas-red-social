@@ -48,6 +48,8 @@ public class PublicacionController {
             setTotalMeGusta(publicacion.getCantidadMeGusta());
             cargarTootip();
         });
+
+        comentarButton.setOnAction(event -> listener.comentar(publicacion));
     }
 
     private void darEstiloBotonMeGusta(boolean meGustaActivado) {

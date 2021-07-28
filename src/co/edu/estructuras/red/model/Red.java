@@ -4,6 +4,7 @@ import co.edu.estructuras.red.estructuras.arbol.ArbolBinario;
 import co.edu.estructuras.red.estructuras.grafo.Grafo;
 import co.edu.estructuras.red.estructuras.exception.GrafoException;
 import co.edu.estructuras.red.estructuras.exception.NodoException;
+import co.edu.estructuras.red.model.exception.PublicacionException;
 import co.edu.estructuras.red.model.exception.RedSocialException;
 import co.edu.estructuras.red.model.exception.VendedorException;
 import java.util.Iterator;
@@ -128,5 +129,14 @@ public class Red {
 
     public boolean meGusta(Publicacion publicacion, Vendedor usuario) {
         return publicacion.dioMeGusta(usuario);
+    }
+
+    public void comentar(String comentario, Publicacion publicacion, Vendedor usuario) throws PublicacionException, RedSocialException {
+        Vendedor propietario = publicacion.getPropietario();
+
+        if(!vendedores.existeNodo(propietario))
+            throw new RedSocialException("Error comentando publicacion: el propietario de la publicacion no esta registrado.");
+
+        propietario.comentarPublicacion(comentario, publicacion, usuario);
     }
 }
