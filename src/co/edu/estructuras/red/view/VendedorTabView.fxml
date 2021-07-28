@@ -3,6 +3,7 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <AnchorPane prefHeight="657.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.estructuras.red.controller.VendedorTabController">
    <children>
@@ -55,6 +56,16 @@
                      </children></VBox>
                   <VBox alignment="TOP_CENTER" maxHeight="551.0" maxWidth="221.0" minHeight="551.0" minWidth="221.0" prefHeight="551.0" prefWidth="221.0">
                      <children>
+                        <HBox prefHeight="25.0" prefWidth="221.0" spacing="2.0">
+                           <children>
+                              <TextField fx:id="buscadorVendedorTFD" promptText="Vendedor a agregar..." HBox.hgrow="ALWAYS" />
+                              <Button fx:id="buscarVendedorButton" mnemonicParsing="false" text="Ir">
+                                 <font>
+                                    <Font name="Font Awesome 5 Brands Regular" size="13.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </HBox>
                         <Button fx:id="actualizarContactosButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="224.0" text="Actualizar" />
                         <Label text="Contactos" />
                         <ListView fx:id="contactosListView" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />

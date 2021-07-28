@@ -13,11 +13,13 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import co.edu.estructuras.red.model.Red;
 import java.io.IOException;
+import java.util.Optional;
 
 public class Principal extends Application {
     private BorderPane root;
@@ -95,10 +97,37 @@ public class Principal extends Application {
 
     public void agregarContacto(Vendedor usuario, Vendedor nuevoContacto) {
         try {
-            redSocial.agregarContacto(usuario, nuevoContacto);
+            ButtonType resultado = mostrarMensajeConfirmacion("", "Agregar contacto",
+                    "¿Quieres agregar a " + nuevoContacto.getNombreVendedor() + "?",
+                    "Presiona una de las opciones", null);
+            if(resultado == ButtonType.OK)
+                redSocial.agregarContacto(usuario, nuevoContacto);
         } catch (GrafoException | RedSocialException | NodoException e) {
             System.err.println(e.getMessage());
         }
+    }
+
+    public void agregarContactoBuscado(Vendedor usuario, String nombre) {
+        try {
+            Vendedor contacto = redSocial.getVendedor(nombre);
+
+            agregarContacto(usuario, contacto);
+        } catch (RedSocialException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+    public ButtonType mostrarMensajeConfirmacion(String mensaje, String titulo, String cabecera, String contenido, Stage escenarioPrincipal )
+    {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.initOwner(escenarioPrincipal);
+        alert.setTitle(titulo);
+        alert.setHeaderText(cabecera);
+        alert.setContentText(contenido);
+
+        Optional<ButtonType> resultado = alert.showAndWait();
+
+        return resultado.get();
     }
 
     public Grafo<Vendedor> getListaContactos(Vendedor vendedor) {

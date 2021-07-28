@@ -13,9 +13,6 @@ import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
 
 public class VendedorTabController {
     private Vendedor usuario;
@@ -39,6 +36,10 @@ public class VendedorTabController {
     @FXML
     private VBox panelPublicaciones;
     private PublicacionListener publicacionListener;
+    @FXML
+    private TextField buscadorVendedorTFD;
+    @FXML
+    private Button buscarVendedorButton;
 
     public void VendedorTabInitializer(Vendedor usuario, VendedorTabListener listenerVendedor,
                                        PublicarListener listenerPublicar, PublicacionListener listenerPublicacion) {
@@ -69,6 +70,11 @@ public class VendedorTabController {
 
         actualizarContactosButton.setOnAction(event -> {
             listaContactos.setAll(listenerVendedor.actualizarListaContactos(usuario).asList());
+        });
+
+        buscarVendedorButton.setOnAction(event -> {
+            listenerVendedor.agregarContactoBuscado(usuario, buscadorVendedorTFD.getText());
+            buscadorVendedorTFD.clear();
         });
 
         cargarPublicarView(listenerPublicar);

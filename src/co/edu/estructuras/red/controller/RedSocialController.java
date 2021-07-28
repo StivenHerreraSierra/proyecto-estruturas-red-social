@@ -66,11 +66,7 @@ public class RedSocialController {
 
         @Override
         public void agregarContacto(Vendedor usuario, Vendedor nuevoContacto) {
-            ButtonType resultado = mostrarMensajeConfirmacion("", "Agregar contacto",
-                    "¿Quieres agregar a " + nuevoContacto.getNombreVendedor() + "?",
-                    "Presiona una de las opciones", null);
-            if(resultado == ButtonType.OK)
-                principal.agregarContacto(usuario, nuevoContacto);
+            principal.agregarContacto(usuario, nuevoContacto);
         }
 
         @Override
@@ -81,6 +77,11 @@ public class RedSocialController {
         @Override
         public ArbolBinario<Publicacion> actualizarMuro(Vendedor usuario) {
             return principal.getPublicacionesVendedor(usuario);
+        }
+
+        @Override
+        public void agregarContactoBuscado(Vendedor usuario, String nombre) {
+            principal.agregarContactoBuscado(usuario, nombre);
         }
     };
 
@@ -121,18 +122,5 @@ public class RedSocialController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public ButtonType mostrarMensajeConfirmacion(String mensaje, String titulo, String cabecera, String contenido, Stage escenarioPrincipal )
-    {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.initOwner(escenarioPrincipal);
-        alert.setTitle(titulo);
-        alert.setHeaderText(cabecera);
-        alert.setContentText(contenido);
-
-        Optional<ButtonType> resultado = alert.showAndWait();
-
-        return resultado.get();
     }
 }

@@ -15,4 +15,6 @@ public interface VendedorTabListener {
     public Grafo<Vendedor> actualizarListaContactos(Vendedor usuario);
 
     public ArbolBinario<Publicacion> actualizarMuro(Vendedor usuario);
+
+    public void agregarContactoBuscado(Vendedor usuario, String nombre);
 }

@@ -104,4 +104,21 @@ public class Red {
         while(it.hasNext())
             arbol.agregar(it.next());
     }
+
+    public Vendedor getVendedor(String nombre) throws RedSocialException {
+        Iterator<Vendedor> it = vendedores.iterator();
+        Vendedor aux, encontrado;
+        encontrado = null;
+
+        while(it.hasNext() && encontrado == null) {
+            aux = it.next();
+            if(aux.getNombreVendedor().equals(nombre))
+                encontrado = aux;
+        }
+
+        if(encontrado == null)
+            throw new RedSocialException("Error buscando vendedor: el nombre indicado no está asociado con uno de los vendedores registrados.");
+
+        return encontrado;
+    }
 }
