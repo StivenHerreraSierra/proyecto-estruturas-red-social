@@ -3,10 +3,12 @@ package co.edu.estructuras.red.model;
 public class Producto implements Comparable<Producto>{
     private String categoriaProducto;
     private String nombreProducto;
+    private double precioProducto;
 
-    public Producto(String nombreProducto, String categoriaProducto) {
+    public Producto(String nombreProducto, String categoriaProducto, double precio) {
         this.categoriaProducto = categoriaProducto;
         this.nombreProducto = nombreProducto;
+        this.precioProducto = precio;
     }
 
     public String getCategoriaProducto() {
@@ -23,6 +25,10 @@ public class Producto implements Comparable<Producto>{
 
     public void setNombreProducto(String nombreProducto) {
         this.nombreProducto = nombreProducto;
+    }
+
+    public double getPrecioProducto() {
+        return precioProducto;
     }
 
     @Override

@@ -11,15 +11,13 @@ public class PublicarController {
     @FXML
     private TextField categoriaTFD;
     @FXML
+    private TextField precioTFD;
+    @FXML
     private Button publicarButton;
 
-    private Vendedor usuario;
-
     public void setListener(PublicarListener listener, Vendedor usuario) {
-        this.usuario = usuario;
-
         publicarButton.setOnAction(event -> {
-            if(listener.publicar(usuario, nombreTFD.getText(), categoriaTFD.getText()))
+            if(listener.publicar(usuario, nombreTFD.getText(), categoriaTFD.getText(), precioTFD.getText()))
                 limpiarCampos();
         });
     }
@@ -28,5 +26,6 @@ public class PublicarController {
     public void limpiarCampos() {
         nombreTFD.clear();
         categoriaTFD.clear();
+        precioTFD.clear();
     }
 }

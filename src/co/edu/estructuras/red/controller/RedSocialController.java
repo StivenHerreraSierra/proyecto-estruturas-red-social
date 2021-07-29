@@ -107,8 +107,8 @@ public class RedSocialController {
 
     private PublicarListener publicarListener = new PublicarListener() {
         @Override
-        public boolean publicar(Vendedor usuario, String nombre, String categoria) {
-            principal.registrarPublicacion(usuario, nombre, categoria);
+        public boolean publicar(Vendedor usuario, String nombre, String categoria, String precio) {
+            principal.registrarPublicacion(usuario, nombre, categoria, precio);
             return true;
         }
     };

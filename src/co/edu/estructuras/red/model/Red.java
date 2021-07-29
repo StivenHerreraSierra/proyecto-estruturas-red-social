@@ -82,11 +82,11 @@ public class Red {
                 '}';
     }
 
-    public void registrarPublicacion(Vendedor usuario, String nombre, String categoria) throws RedSocialException, VendedorException {
+    public void registrarPublicacion(Vendedor usuario, String nombre, String categoria, double precio) throws RedSocialException, VendedorException {
         if(!vendedores.existeNodo(usuario))
             throw new RedSocialException("Error publicando producto: el usuario no está registrado -> " + usuario);
 
-        usuario.agregarPublicacion(nombre, categoria);
+        usuario.agregarPublicacion(nombre, categoria, precio);
     }
 
     public ArbolBinario<Publicacion> getPublicacionesVendedor(Vendedor vendedor) throws GrafoException, NodoException {

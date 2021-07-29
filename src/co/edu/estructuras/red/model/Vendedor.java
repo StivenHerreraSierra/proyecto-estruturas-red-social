@@ -44,8 +44,8 @@ public class Vendedor {
         return nombreVendedor;
     }
 
-    public void agregarPublicacion(String nombre, String categoria) throws VendedorException {
-        Producto producto = new Producto(nombre, categoria);
+    public void agregarPublicacion(String nombre, String categoria, double precio) throws VendedorException {
+        Producto producto = new Producto(nombre, categoria, precio);
 
         if(!productos.agregar(producto))
             throw new VendedorException("Error agregando producto: el producto ya se ha registrado.");

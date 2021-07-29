@@ -18,6 +18,8 @@ public class PublicacionController {
     @FXML
     private Label categoriaProducto;
     @FXML
+    private Label precioProducto;
+    @FXML
     private Label totalMeGusta;
     @FXML
     private Button meGustaButton;
@@ -40,6 +42,7 @@ public class PublicacionController {
         fecha.setText(publicacion.getFechaPublicacionString());
         nombreProducto.setText(producto.getNombreProducto());
         categoriaProducto.setText("Categoria: " + producto.getCategoriaProducto());
+        precioProducto.setText(String.valueOf(producto.getPrecioProducto()));
         setTotalMeGusta(publicacion.getCantidadMeGusta());
 
         darEstiloBotonMeGusta(meGustaActivado);

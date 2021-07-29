@@ -147,12 +147,16 @@ public class Principal extends Application {
         return contactosGrafo;
     }
 
-    public void registrarPublicacion(Vendedor usuario, String nombre, String categoria) {
+    public void registrarPublicacion(Vendedor usuario, String nombre, String categoria, String precio) {
         try {
-            redSocial.registrarPublicacion(usuario, nombre, categoria);
+            double precioDouble = Double.parseDouble(precio);
+
+            redSocial.registrarPublicacion(usuario, nombre, categoria, precioDouble);
             usuario.getPublicaciones().inorden();
         } catch (RedSocialException | VendedorException e) {
             System.err.println(e.getMessage());
+        } catch (NumberFormatException e) {
+            System.err.println("Error, el precio ingresado contiene caracteres inválidos.");
         }
     }
 

@@ -16,7 +16,13 @@
                   <Label fx:id="fecha" text="fecha" />
                </children>
             </HBox>
-            <Label fx:id="nombreProducto" text="Nombre producto" />
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label fx:id="nombreProducto" text="Nombre producto" />
+                  <Label text=": $" />
+                  <Label fx:id="precioProducto" text="Precio" />
+               </children>
+            </HBox>
             <Label fx:id="categoriaProducto" text="[Categoría producto]" />
             <HBox alignment="CENTER_RIGHT" prefHeight="29.0" prefWidth="365.0" spacing="8.0">
                <children>
