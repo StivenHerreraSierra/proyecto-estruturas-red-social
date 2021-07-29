@@ -71,6 +71,10 @@ public class Red {
     public void agregarContacto(Vendedor usuario, Vendedor nuevoContacto) throws GrafoException, NodoException, RedSocialException {
         if(usuario == null || nuevoContacto == null)
             throw new RedSocialException("Error agregando contacto: el usuario o el nuevo contacto es null -> " + usuario + " - " + nuevoContacto);
+        else if(usuario.equals(nuevoContacto))
+            throw new RedSocialException("Error agregando contacto: el usuario no puede agregarse a sí mismo.");
+        else if(vendedores.estanConectados(usuario, nuevoContacto))
+            throw new RedSocialException("Error agregando contacto: los usuarios ya son amigos.");
 
         vendedores.conectarNodos(usuario, nuevoContacto);
     }
