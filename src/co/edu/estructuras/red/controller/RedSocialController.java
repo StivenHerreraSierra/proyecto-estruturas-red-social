@@ -15,6 +15,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Optional;
 
 public class RedSocialController {
@@ -36,7 +37,22 @@ public class RedSocialController {
             loader.setLocation(getClass().getResource("../view/PanelView.fxml"));
             AnchorPane view = loader.load();
             PanelController controller = loader.getController();
-            PanelListener listener = nombreUsuario -> registrarUsuario(nombreUsuario);
+            PanelListener listener = new PanelListener() {
+                @Override
+                public void registrarListener(String nombreUsuario) {
+                    registrarUsuario(nombreUsuario);
+                }
+
+                @Override
+                public int contarProductosFecha(LocalDate desde, LocalDate hasta) {
+                    return principal.contarProductosFecha(desde, hasta);
+                }
+
+                @Override
+                public Grafo<Vendedor> getListaVendedores() {
+                    return principal.getVendedores();
+                }
+            };
             controller.setEventHandler(listener);
 
             panelTab.setContent(view);

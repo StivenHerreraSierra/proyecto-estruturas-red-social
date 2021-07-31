@@ -3,7 +3,9 @@ package co.edu.estructuras.red.model;
 import co.edu.estructuras.red.estructuras.lista.ListaDoble;
 import co.edu.estructuras.red.model.exception.PublicacionException;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.chrono.ChronoLocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Iterator;
 
@@ -116,5 +118,10 @@ public class Publicacion implements Comparable<Publicacion> {
 
         Comentario comentario = new Comentario(mensaje, usuario, this);
         listaComentarios.agregarfinal(comentario);
+    }
+
+    public boolean esPublicadaEntre(LocalDate desde, LocalDate hasta) {
+        //Si la publicacion se hizo antes de la fecha "Desde" o después de la fecha "Hasta", no está en entre esas fechas.
+        return !(fechaPublicacion.toLocalDate().isBefore(desde) || fechaPublicacion.toLocalDate().isAfter(hasta));
     }
 }

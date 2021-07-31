@@ -27,6 +27,10 @@ public class Vendedor {
         return publicaciones;
     }
 
+    public ArbolBinario<Producto> getProductos() {
+        return productos;
+    }
+
     @Override
     public boolean equals(Object object) {
         if(object == null || getClass() != object.getClass())

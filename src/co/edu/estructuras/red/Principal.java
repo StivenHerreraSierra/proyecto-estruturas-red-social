@@ -22,6 +22,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import co.edu.estructuras.red.model.Red;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Optional;
 
 public class Principal extends Application {
@@ -223,5 +224,19 @@ public class Principal extends Application {
             System.err.println(e.getMessage());
         }
         return false;
+    }
+
+    public int contarProductosFecha(LocalDate desde, LocalDate hasta) {
+        int cantidad = 0;
+        try {
+            cantidad = this.redSocial.contarProductosFecha(desde, hasta);
+        } catch (RedSocialException e) {
+            System.err.println(e.getMessage());
+        }
+        return cantidad;
+    }
+
+    public Grafo<Vendedor> getVendedores() {
+        return redSocial.getVendedores();
     }
 }

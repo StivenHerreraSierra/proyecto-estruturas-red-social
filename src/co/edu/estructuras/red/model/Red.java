@@ -7,6 +7,8 @@ import co.edu.estructuras.red.estructuras.exception.NodoException;
 import co.edu.estructuras.red.model.exception.PublicacionException;
 import co.edu.estructuras.red.model.exception.RedSocialException;
 import co.edu.estructuras.red.model.exception.VendedorException;
+
+import java.time.LocalDate;
 import java.util.Iterator;
 
 public class Red {
@@ -142,5 +144,25 @@ public class Red {
             throw new RedSocialException("Error comentando publicacion: el propietario de la publicacion no esta registrado.");
 
         propietario.comentarPublicacion(comentario, publicacion, usuario);
+    }
+
+    public int contarProductosFecha(LocalDate desde, LocalDate hasta) throws RedSocialException {
+        int contador = 0;
+
+        if(desde.isAfter(hasta))
+            throw new RedSocialException("Error contando las publicaciones en una fecha determinada: la fecha 'Desde' " +
+                    "ocurre después de la fecha 'Hasta'.");
+
+        for (Vendedor vendedor : vendedores) {
+            for(Publicacion publicacion : vendedor.getPublicaciones()) {
+                if(publicacion.esPublicadaEntre(desde, hasta))
+                    contador++;
+            }
+        }
+        return contador;
+    }
+
+    public Grafo<Vendedor> getVendedores() {
+        return vendedores;
     }
 }
