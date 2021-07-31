@@ -42,6 +42,8 @@ public class Principal extends Application {
         loadRoot();
         loadRedSocialView();
         Scene scene = new Scene(root);
+        //scene.getStylesheets().add(Principal.class.getResource("view/FluentFX.css").toExternalForm());
+        scene.getStylesheets().add(Principal.class.getResource("view/FlatBee.css").toExternalForm());
 
         primaryStage.setTitle("Red Social");
         primaryStage.setScene(scene);

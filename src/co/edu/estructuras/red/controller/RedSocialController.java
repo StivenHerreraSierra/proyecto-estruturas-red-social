@@ -52,6 +52,11 @@ public class RedSocialController {
                 public Grafo<Vendedor> getListaVendedores() {
                     return principal.getVendedores();
                 }
+
+                @Override
+                public Grafo<Vendedor> getListaContactos(Vendedor vendedor) {
+                    return principal.getListaContactos(vendedor);
+                }
             };
             controller.setEventHandler(listener);
 

@@ -1,5 +1,6 @@
 package co.edu.estructuras.red.controller;
 
+import co.edu.estructuras.red.Principal;
 import co.edu.estructuras.red.estructuras.arbol.ArbolBinario;
 import co.edu.estructuras.red.estructuras.grafo.Grafo;
 import co.edu.estructuras.red.model.Producto;
@@ -8,8 +9,11 @@ import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 
+import java.io.IOException;
 import java.time.LocalDate;
 
 public class PanelController {
@@ -26,8 +30,8 @@ public class PanelController {
     @FXML
     private Button contarPublicacionesButton;
     @FXML
-    private ComboBox<Vendedor> vendedoresComboBox;
-    private ObservableList<Vendedor> vendedoresLista;
+    private ComboBox<Vendedor> vendedoresComboBoxProducto;
+    private ObservableList<Vendedor> vendedoresListaProducto;
     @FXML
     private TableView<Producto> productosVendedorTableView;
     @FXML
@@ -53,7 +57,7 @@ public class PanelController {
             nombreTFD.clear();
             listener.registrarListener(nombre);
 
-            actualizarListaVendedores();
+            actualizarListaVendedores(vendedoresListaProducto);
         });
 
         contarPublicacionesButton.setOnAction(event -> {
@@ -65,8 +69,10 @@ public class PanelController {
             cantidadProductosFechaLabel.setText(String.valueOf(total));
         });
 
-        cargarListaVendedores();
+        cargarListaVendedoresProducto();
         cargarTablaProductos();
+
+        cargarContactosUsuarioPanel();
     }
 
     private void cargarTablaProductos() {
@@ -78,18 +84,18 @@ public class PanelController {
         productosVendedorTableView.setItems(productosLista);
     }
 
-    private void cargarListaVendedores() {
-        vendedoresLista = FXCollections.observableArrayList();
-        actualizarListaVendedores();
-        vendedoresComboBox.setItems(vendedoresLista);
+    private void cargarListaVendedoresProducto() {
+        vendedoresListaProducto = FXCollections.observableArrayList();
+        actualizarListaVendedores(vendedoresListaProducto);
+        vendedoresComboBoxProducto.setItems(vendedoresListaProducto);
 
-        vendedoresComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+        vendedoresComboBoxProducto.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             actualizarProductosLista(newValue);
         });
     }
 
     private void actualizarProductosLista(Vendedor vendedorSeleccionado) {
-        if(vendedorSeleccionado != null && vendedoresLista.contains(vendedorSeleccionado)) {
+        if(vendedorSeleccionado != null && vendedoresListaProducto.contains(vendedorSeleccionado)) {
             ArbolBinario<Producto> productos = vendedorSeleccionado.getProductos();
             productosLista.clear();
             if (productos.getPeso() > 0) {
@@ -101,18 +107,47 @@ public class PanelController {
         }
     }
 
-    private void actualizarListaVendedores() {
+    private void actualizarListaVendedores(ObservableList<Vendedor> lista) {
         Grafo<Vendedor> vendedores = panelListener.getListaVendedores();
-        vendedoresLista.setAll(vendedores.asList());
+        lista.setAll(vendedores.asList());
     }
 
     @FXML
-    private void actualizar() {
-        Vendedor vendedorSeleccionado = vendedoresComboBox.getValue();
-        actualizarListaVendedores();
+    private void actualizarProductos() {
+        Vendedor vendedorSeleccionado = vendedoresComboBoxProducto.getValue();
+        actualizarListaVendedores(vendedoresListaProducto);
         if(vendedorSeleccionado != null) {
-            vendedoresComboBox.getSelectionModel().select(vendedorSeleccionado);
+            vendedoresComboBoxProducto.getSelectionModel().select(vendedorSeleccionado);
             actualizarProductosLista(vendedorSeleccionado);
+        }
+    }
+
+    //===================================Controlador para Contactos por usuario===================================
+    private ContactosUsuarioPanelListener listenerContactos = new ContactosUsuarioPanelListener() {
+        @Override
+        public Grafo<Vendedor> getListaVendedores() {
+            return panelListener.getListaVendedores();
+        }
+
+        @Override
+        public Grafo<Vendedor> getListaContactos(Vendedor vendedorSeleccionado) {
+            return panelListener.getListaContactos(vendedorSeleccionado);
+        }
+    };
+
+    @FXML
+    private TitledPane contactosPanel;
+
+    private void cargarContactosUsuarioPanel() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Principal.class.getResource("view/ContactosUsuarioPanelView.fxml"));
+            AnchorPane view = loader.load();
+            contactosPanel.setContent(view);
+            ContactosUsuarioPanelController controller = loader.getController();
+            controller.setListener(listenerContactos);
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
         }
     }
 }
