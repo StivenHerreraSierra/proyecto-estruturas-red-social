@@ -59,7 +59,7 @@ public class PublicacionController {
         if(meGustaActivado)
             meGustaButton.setStyle("-fx-background-color: #00C1D4;");
         else
-            meGustaButton.setStyle("-fx-background-color: #EEEEEE;");
+            meGustaButton.setStyle("");
     }
 
     public void setTotalMeGusta(int totalMeGusta) {

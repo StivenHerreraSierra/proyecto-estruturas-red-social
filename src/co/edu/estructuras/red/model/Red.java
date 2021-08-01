@@ -9,7 +9,11 @@ import co.edu.estructuras.red.model.exception.RedSocialException;
 import co.edu.estructuras.red.model.exception.VendedorException;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Iterator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Red {
     private Grafo<Vendedor> vendedores;
@@ -88,7 +92,7 @@ public class Red {
                 '}';
     }
 
-    public void registrarPublicacion(Vendedor usuario, String nombre, String categoria, double precio) throws RedSocialException, VendedorException {
+    public void registrarPublicacion(Vendedor usuario, String nombre, String categoria, double precio) throws RedSocialException, VendedorException, PublicacionException {
         if(!vendedores.existeNodo(usuario))
             throw new RedSocialException("Error publicando producto: el usuario no está registrado -> " + usuario);
 
@@ -164,5 +168,18 @@ public class Red {
 
     public Grafo<Vendedor> getVendedores() {
         return vendedores;
+    }
+
+    public List<Publicacion> getTopPublicaciones() {
+        ArrayList<Publicacion> publicaciones = new ArrayList<>();
+
+        for(Vendedor vendedor : vendedores) {
+            publicaciones.addAll(vendedor.getPublicaciones().getListaInorden());
+        }
+
+        return publicaciones.stream()
+                .sorted((o1, o2) -> Integer.compare(o2.getCantidadMeGusta(), o1.getCantidadMeGusta()))
+                .limit(10)
+                .collect(Collectors.toList());
     }
 }

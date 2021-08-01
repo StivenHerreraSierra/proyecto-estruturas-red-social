@@ -23,11 +23,14 @@ import javafx.stage.Stage;
 import co.edu.estructuras.red.model.Red;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 public class Principal extends Application {
     private BorderPane root;
     private Stage primaryStage;
+    private Stage secondaryStage;
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -38,11 +41,11 @@ public class Principal extends Application {
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.redSocial = new Red();
+        this.secondaryStage = new Stage();
 
         loadRoot();
         loadRedSocialView();
         Scene scene = new Scene(root);
-        //scene.getStylesheets().add(Principal.class.getResource("view/FluentFX.css").toExternalForm());
         scene.getStylesheets().add(Principal.class.getResource("view/FlatBee.css").toExternalForm());
 
         primaryStage.setTitle("Red Social");
@@ -56,6 +59,8 @@ public class Principal extends Application {
             loader.setLocation(getClass().getResource("view/RootLayout.fxml"));
             root = loader.load();
         } catch (IOException e) {
+            mostrarMensaje(Alert.AlertType.ERROR, "Error en la aplicacion", "Error cargando la GUI",
+                    e.getMessage(), primaryStage);
             System.err.println(e.getMessage());
         }
     }
@@ -69,7 +74,8 @@ public class Principal extends Application {
             controller.setPrincipal(this);
             root.setCenter(view);
         } catch (IOException e) {
-            System.err.println(e.getMessage());
+            mostrarMensaje(Alert.AlertType.ERROR, "Error en la aplicacion", "Error cargando la GUI",
+                    e.getMessage(), primaryStage);
         }
     }
 
@@ -78,7 +84,8 @@ public class Principal extends Application {
         try {
             vendedor = redSocial.registrarVendedor(nombre);
         } catch (GrafoException | RedSocialException e) {
-            System.err.println("Error registrando el vendedor: " + e.getMessage());
+            mostrarMensaje(Alert.AlertType.ERROR, "Error en la aplicacion", "Error en registro",
+                    e.getMessage(), primaryStage);
         }
 
         return  vendedor;
@@ -89,7 +96,8 @@ public class Principal extends Application {
         try {
             vendedoresGrafo = redSocial.getListaVendedoresAgregar(vendedor);
         } catch (GrafoException | NodoException e) {
-            System.err.println("Error obteniendo la lista de vendedores disponibles para agregar: " + e.getMessage());
+            mostrarMensaje(Alert.AlertType.ERROR, "Error en la aplicacion",
+                    "Error obteniendo lista de vendedores para agregar", e.getMessage(), primaryStage);
         }
         return vendedoresGrafo;
     }
@@ -99,7 +107,8 @@ public class Principal extends Application {
         try {
             vendedoresGrafo = redSocial.getListaSugeridosAgregar(vendedor);
         } catch (GrafoException | NodoException e) {
-            System.err.println("Error obteniendo la lista de vendedores disponibles para agregar: " + e.getMessage());
+            mostrarMensaje(Alert.AlertType.ERROR, "Error en la aplicacion",
+                    "Error obteniendo lista de vendedores para agregar", e.getMessage(), primaryStage);
         }
         return vendedoresGrafo;
     }
@@ -112,7 +121,8 @@ public class Principal extends Application {
             if(resultado == ButtonType.OK)
                 redSocial.agregarContacto(usuario, nuevoContacto);
         } catch (GrafoException | RedSocialException | NodoException e) {
-            System.err.println(e.getMessage());
+            mostrarMensaje(Alert.AlertType.ERROR, "Error en la aplicacion",
+                    "Error agregando contacto", e.getMessage(), primaryStage);
         }
     }
 
@@ -122,7 +132,8 @@ public class Principal extends Application {
 
             agregarContacto(usuario, contacto);
         } catch (RedSocialException e) {
-            System.err.println(e.getMessage());
+            mostrarMensaje(Alert.AlertType.ERROR, "Error en la aplicacion",
+                    "Error agregando contacto", e.getMessage(), primaryStage);
         }
     }
 
@@ -144,8 +155,8 @@ public class Principal extends Application {
         try {
             contactosGrafo = redSocial.getListaContactos(vendedor);
         } catch (GrafoException | NodoException e) {
-            System.err.println("Error obteniendo la lista de contactos de " +
-                    vendedor.getNombreVendedor() + ": " + e.getMessage());
+            mostrarMensaje(Alert.AlertType.ERROR, "Error en la aplicacion",
+                    "Error obteniendo contactos de " + vendedor.getNombreVendedor(), e.getMessage(), primaryStage);
         }
         return contactosGrafo;
     }
@@ -156,10 +167,12 @@ public class Principal extends Application {
 
             redSocial.registrarPublicacion(usuario, nombre, categoria, precioDouble);
             usuario.getPublicaciones().inorden();
-        } catch (RedSocialException | VendedorException e) {
-            System.err.println(e.getMessage());
+        } catch (RedSocialException | VendedorException | PublicacionException e) {
+            mostrarMensaje(Alert.AlertType.ERROR, "Error en la aplicacion",
+                    "Error agregando publicacion", e.getMessage(), primaryStage);
         } catch (NumberFormatException e) {
-            System.err.println("Error, el precio ingresado contiene caracteres inválidos.");
+            mostrarMensaje(Alert.AlertType.ERROR, "Error en la aplicacion", "Error agregando publicacion",
+                    "Error, el precio no fue ingresado o contiene caracteres invalidos.", primaryStage);
         }
     }
 
@@ -168,12 +181,13 @@ public class Principal extends Application {
         try {
             publicaciones = redSocial.getPublicacionesVendedor(vendedor);
         } catch (GrafoException | NodoException e) {
-            System.err.println(e.getMessage());
+            mostrarMensaje(Alert.AlertType.ERROR, "Error en la aplicacion", "Error obteniendo publicaciones",
+                    e.getMessage(), primaryStage);
         }
         return publicaciones;
     }
 
-    public void mostrarMensaje(String mensaje, Alert.AlertType miA, String titulo, String cabecera, String contenido, Stage escenarioPrincipal )
+    public void mostrarMensaje(Alert.AlertType miA, String titulo, String cabecera, String contenido, Stage escenarioPrincipal )
     {
         Alert alert = new Alert(miA);
         alert.initOwner(escenarioPrincipal);
@@ -191,17 +205,18 @@ public class Principal extends Application {
         return redSocial.meGusta(publicacion, usuario);
     }
 
+    //====================Cargando GUI para comentarios====================
     public void mostrarVentanaComentarios(Publicacion publicacion, Vendedor usuario) {
-        Stage secundaryStage = new Stage();
         BorderPane root = new BorderPane();
         Scene scene = new Scene(root);
+        scene.getStylesheets().add(Principal.class.getResource("view/FlatBee.css").toExternalForm());
 
         cargarVentanaComentarios(root, publicacion, usuario);
 
-        secundaryStage.setTitle("Comentarios");
-        secundaryStage.setScene(scene);
-        secundaryStage.initModality(Modality.APPLICATION_MODAL);
-        secundaryStage.showAndWait();
+        secondaryStage.setTitle("Comentarios");
+        secondaryStage.setScene(scene);
+        secondaryStage.initModality(Modality.APPLICATION_MODAL);
+        secondaryStage.showAndWait();
     }
 
     private void cargarVentanaComentarios(BorderPane root, Publicacion publicacion, Vendedor usuario) {
@@ -214,7 +229,8 @@ public class Principal extends Application {
             controller.panelComentarioInitializer(publicacion, usuario);
             root.setCenter(view);
         } catch (IOException e) {
-            System.err.println(e.getMessage());
+            mostrarMensaje(Alert.AlertType.ERROR, "Error en la aplicacion", "Error cargando GUI",
+                    e.getMessage(), primaryStage);
         }
     }
 
@@ -223,7 +239,8 @@ public class Principal extends Application {
             redSocial.comentar(comentario, publicacion, usuario);
             return true;
         } catch (PublicacionException | RedSocialException e) {
-            System.err.println(e.getMessage());
+            mostrarMensaje(Alert.AlertType.ERROR, "Error en la aplicacion", "Error comentando publicacion",
+                    e.getMessage(), secondaryStage);
         }
         return false;
     }
@@ -233,12 +250,17 @@ public class Principal extends Application {
         try {
             cantidad = this.redSocial.contarProductosFecha(desde, hasta);
         } catch (RedSocialException e) {
-            System.err.println(e.getMessage());
+            mostrarMensaje(Alert.AlertType.ERROR, "Error en la aplicacion", "Error contando publicaciones",
+                    e.getMessage(), primaryStage);
         }
         return cantidad;
     }
 
     public Grafo<Vendedor> getVendedores() {
         return redSocial.getVendedores();
+    }
+
+    public List<Publicacion> getTopPublicaciones() {
+        return redSocial.getTopPublicaciones();
     }
 }

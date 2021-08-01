@@ -48,7 +48,10 @@ public class Vendedor {
         return nombreVendedor;
     }
 
-    public void agregarPublicacion(String nombre, String categoria, double precio) throws VendedorException {
+    public void agregarPublicacion(String nombre, String categoria, double precio) throws VendedorException, PublicacionException {
+        if(nombre.isEmpty() || categoria.isEmpty())
+            throw new PublicacionException("Error publicando producto: el nombre o categoria no puede estar vacío");
+
         Producto producto = new Producto(nombre, categoria, precio);
 
         if(!productos.agregar(producto))

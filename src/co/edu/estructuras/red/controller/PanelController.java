@@ -4,6 +4,7 @@ import co.edu.estructuras.red.Principal;
 import co.edu.estructuras.red.estructuras.arbol.ArbolBinario;
 import co.edu.estructuras.red.estructuras.grafo.Grafo;
 import co.edu.estructuras.red.model.Producto;
+import co.edu.estructuras.red.model.Publicacion;
 import co.edu.estructuras.red.model.Vendedor;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
@@ -15,6 +16,7 @@ import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
 
 public class PanelController {
     @FXML
@@ -73,6 +75,8 @@ public class PanelController {
         cargarTablaProductos();
 
         cargarContactosUsuarioPanel();
+
+        cargarTopMeGustaPanel();
     }
 
     private void cargarTablaProductos() {
@@ -146,6 +150,30 @@ public class PanelController {
             contactosPanel.setContent(view);
             ContactosUsuarioPanelController controller = loader.getController();
             controller.setListener(listenerContactos);
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+    //===================================Controlador para Top Publicaciones===================================
+    private TopMeGustaPanelListener topMeGustaListener = new TopMeGustaPanelListener() {
+        @Override
+        public List<Publicacion> getTopPublicaciones() {
+            return panelListener.getTopPublicaciones();
+        }
+    };
+
+    @FXML
+    private TitledPane topMeGustaPanel;
+
+    private void cargarTopMeGustaPanel() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Principal.class.getResource("view/TopMeGustaPanelView.fxml"));
+            AnchorPane view = loader.load();
+            topMeGustaPanel.setContent(view);
+            TopMeGustaPanelController controller = loader.getController();
+            controller.setListener(topMeGustaListener);
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }

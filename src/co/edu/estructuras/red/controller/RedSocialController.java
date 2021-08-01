@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 public class RedSocialController {
@@ -56,6 +57,11 @@ public class RedSocialController {
                 @Override
                 public Grafo<Vendedor> getListaContactos(Vendedor vendedor) {
                     return principal.getListaContactos(vendedor);
+                }
+
+                @Override
+                public List<Publicacion> getTopPublicaciones() {
+                    return principal.getTopPublicaciones();
                 }
             };
             controller.setEventHandler(listener);
