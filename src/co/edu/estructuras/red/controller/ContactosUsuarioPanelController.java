@@ -19,8 +19,6 @@ public class ContactosUsuarioPanelController {
     private TableView<Vendedor> contactosVendedorTableView;
     @FXML
     private TableColumn<Vendedor, String> nombreContactoColumn;
-    @FXML
-    private TableColumn<Vendedor, Integer> cantidadMensajesColumn;
     private ObservableList<Vendedor> contactosLista;
     @FXML
     private Label cantidadContactosVendedorLabel;
@@ -65,8 +63,12 @@ public class ContactosUsuarioPanelController {
     private void cargarTablaContactos() {
         contactosLista = FXCollections.observableArrayList();
         nombreContactoColumn.setCellValueFactory(contacto -> new ReadOnlyObjectWrapper<>(contacto.getValue().getNombreVendedor()));
-        cantidadMensajesColumn.setCellValueFactory(producto -> new ReadOnlyObjectWrapper<>(0));
 
+        contactosVendedorTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->  {
+            Vendedor seleccionado = vendedoresComboBoxContacto.getValue();
+            if(newValue != null && seleccionado != null)
+                listener.cantidadMensajesIntercambiados(seleccionado, newValue);
+        });
         contactosVendedorTableView.setItems(contactosLista);
     }
 

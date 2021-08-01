@@ -137,6 +137,11 @@ public class PanelController {
         public Grafo<Vendedor> getListaContactos(Vendedor vendedorSeleccionado) {
             return panelListener.getListaContactos(vendedorSeleccionado);
         }
+
+        @Override
+        public void cantidadMensajesIntercambiados(Vendedor usuario1, Vendedor usuario2) {
+            panelListener.cantidadMensajesIntercambiados(usuario1, usuario2);
+        }
     };
 
     @FXML

@@ -17,4 +17,6 @@ public interface PanelListener {
     Grafo<Vendedor> getListaContactos(Vendedor vendedorSeleccionado);
 
     List<Publicacion> getTopPublicaciones();
+
+    void cantidadMensajesIntercambiados(Vendedor usuario1, Vendedor usuario2);
 }

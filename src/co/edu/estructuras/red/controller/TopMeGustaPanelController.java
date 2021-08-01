@@ -17,6 +17,8 @@ public class TopMeGustaPanelController {
     @FXML
     private TableColumn<Publicacion, String> categoriaProductoColumn;
     @FXML
+    private TableColumn<Publicacion, Double> precioProductoColumn;
+    @FXML
     private TableColumn<Publicacion, Integer> meGustaColumn;
     private ObservableList<Publicacion> publicacionesLista;
 
@@ -34,6 +36,7 @@ public class TopMeGustaPanelController {
 
         nombreProductoColumn.setCellValueFactory(publicacion -> new ReadOnlyObjectWrapper<>(publicacion.getValue().getProductoDePublicacion().getNombreProducto()));
         categoriaProductoColumn.setCellValueFactory(publicacion -> new ReadOnlyObjectWrapper<>(publicacion.getValue().getProductoDePublicacion().getCategoriaProducto()));
+        precioProductoColumn.setCellValueFactory(publicacion -> new ReadOnlyObjectWrapper<>(publicacion.getValue().getProductoDePublicacion().getPrecioProducto()));
         meGustaColumn.setCellValueFactory(publicacion -> new ReadOnlyObjectWrapper<>(publicacion.getValue().getCantidadMeGusta()));
 
         publicacionesTableView.setItems(publicacionesLista);

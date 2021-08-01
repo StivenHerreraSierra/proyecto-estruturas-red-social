@@ -83,6 +83,11 @@ public class VendedorTabController {
         listaContactos = FXCollections.observableArrayList();
         contactosListView.setItems(listaContactos);
 
+        contactosListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if(newValue != null)
+                listenerVendedor.iniciarChat(usuario, newValue);
+        });
+
         actualizarContactosButton.setOnAction(event -> {
             listaContactos.setAll(listenerVendedor.actualizarListaContactos(usuario).asList());
         });

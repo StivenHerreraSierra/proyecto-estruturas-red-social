@@ -63,6 +63,11 @@ public class RedSocialController {
                 public List<Publicacion> getTopPublicaciones() {
                     return principal.getTopPublicaciones();
                 }
+
+                @Override
+                public void cantidadMensajesIntercambiados(Vendedor usuario1, Vendedor usuario2) {
+                    principal.cantidadMensajesIntercambiados(usuario1, usuario2);
+                }
             };
             controller.setEventHandler(listener);
 
@@ -129,6 +134,11 @@ public class RedSocialController {
         @Override
         public void mostrarComentarios(Publicacion publicacion, Vendedor usuario) {
             principal.mostrarVentanaComentarios(publicacion, usuario);
+        }
+
+        @Override
+        public void iniciarChat(Vendedor usuario1, Vendedor usuario2) {
+            principal.iniciarChat(usuario1, usuario2);
         }
     };
 

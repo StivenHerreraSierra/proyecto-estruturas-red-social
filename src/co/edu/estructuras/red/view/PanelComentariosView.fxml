@@ -11,7 +11,7 @@
          <children>
             <TextArea fx:id="comentariosTextArea" editable="false" prefHeight="348.0" prefWidth="402.0" wrapText="true" VBox.vgrow="ALWAYS" />
             <Separator prefWidth="200.0" />
-            <TextArea fx:id="campoComentarioTextArea" prefHeight="1.0" prefWidth="402.0" wrapText="true" VBox.vgrow="ALWAYS" />
+            <TextArea fx:id="campoComentarioTextArea" prefHeight="1.0" prefWidth="402.0" promptText="Escribe tu comentario" wrapText="true" VBox.vgrow="ALWAYS" />
             <Button mnemonicParsing="false" onAction="#publicarComentario" prefHeight="26.0" prefWidth="169.0" text="Publicar">
                <VBox.margin>
                   <Insets top="3.0" />

@@ -4,6 +4,8 @@ import co.edu.estructuras.red.estructuras.arbol.ArbolBinario;
 import co.edu.estructuras.red.estructuras.grafo.Grafo;
 import co.edu.estructuras.red.estructuras.exception.GrafoException;
 import co.edu.estructuras.red.estructuras.exception.NodoException;
+import co.edu.estructuras.red.estructuras.lista.ListaDoble;
+import co.edu.estructuras.red.model.exception.ChatException;
 import co.edu.estructuras.red.model.exception.PublicacionException;
 import co.edu.estructuras.red.model.exception.RedSocialException;
 import co.edu.estructuras.red.model.exception.VendedorException;
@@ -181,5 +183,27 @@ public class Red {
                 .sorted((o1, o2) -> Integer.compare(o2.getCantidadMeGusta(), o1.getCantidadMeGusta()))
                 .limit(10)
                 .collect(Collectors.toList());
+    }
+
+    public void agregarMensajeChat(String mensaje, Vendedor usuario1, Vendedor usuario2) throws GrafoException, RedSocialException, ChatException {
+        if(!vendedores.existeNodo(usuario1) || !vendedores.existeNodo(usuario2) || !vendedores.estanConectados(usuario1, usuario2))
+            throw new RedSocialException("Error enviando mensaje: uno o ambos usuarios no están registrados o no son amigos.");
+
+        usuario1.agregarMensaje(mensaje, usuario2);
+    }
+
+    public String getMensajesChatString(Vendedor usuario1, Vendedor usuario2) throws RedSocialException {
+        if(!vendedores.existeNodo(usuario1) || !vendedores.existeNodo(usuario2))
+            throw new RedSocialException("Error enviando mensaje: uno o ambos usuarios no están registrados.");
+
+        return usuario1.getMensajesChatString(usuario2);
+    }
+
+    public int getCantidadMensajesIntercambiados(Vendedor usuario1, Vendedor usuario2) throws RedSocialException, GrafoException {
+        if(!vendedores.existeNodo(usuario1) || !vendedores.existeNodo(usuario2) || !vendedores.estanConectados(usuario1, usuario2))
+            throw new RedSocialException("Error obteniendo la cantidad de mensajes intercambiados: uno o ambos usuarios" +
+                    " no estan registrados o no estan conectados.");
+
+        return usuario1.getCantidadMensajesCon(usuario2);
     }
 }

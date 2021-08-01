@@ -25,4 +25,6 @@ public interface VendedorTabListener {
     boolean meGusta(Publicacion publicacion, Vendedor usuario);
 
     public void mostrarComentarios(Publicacion publicacion, Vendedor usuario);
+
+    void iniciarChat(Vendedor usuario, Vendedor newValue);
 }

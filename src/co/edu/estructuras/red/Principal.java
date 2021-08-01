@@ -1,5 +1,6 @@
 package co.edu.estructuras.red;
 
+import co.edu.estructuras.red.controller.ChatController;
 import co.edu.estructuras.red.controller.PanelComentarioController;
 import co.edu.estructuras.red.controller.RedSocialController;
 import co.edu.estructuras.red.estructuras.arbol.ArbolBinario;
@@ -8,6 +9,7 @@ import co.edu.estructuras.red.estructuras.exception.GrafoException;
 import co.edu.estructuras.red.estructuras.exception.NodoException;
 import co.edu.estructuras.red.model.Publicacion;
 import co.edu.estructuras.red.model.Vendedor;
+import co.edu.estructuras.red.model.exception.ChatException;
 import co.edu.estructuras.red.model.exception.PublicacionException;
 import co.edu.estructuras.red.model.exception.RedSocialException;
 import co.edu.estructuras.red.model.exception.VendedorException;
@@ -42,6 +44,7 @@ public class Principal extends Application {
         this.primaryStage = primaryStage;
         this.redSocial = new Red();
         this.secondaryStage = new Stage();
+        secondaryStage.initModality(Modality.APPLICATION_MODAL);
 
         loadRoot();
         loadRedSocialView();
@@ -115,7 +118,7 @@ public class Principal extends Application {
 
     public void agregarContacto(Vendedor usuario, Vendedor nuevoContacto) {
         try {
-            ButtonType resultado = mostrarMensajeConfirmacion("", "Agregar contacto",
+            ButtonType resultado = mostrarMensajeConfirmacion("Agregar contacto",
                     "¿Quieres agregar a " + nuevoContacto.getNombreVendedor() + "?",
                     "Presiona una de las opciones", null);
             if(resultado == ButtonType.OK)
@@ -137,7 +140,7 @@ public class Principal extends Application {
         }
     }
 
-    public ButtonType mostrarMensajeConfirmacion(String mensaje, String titulo, String cabecera, String contenido, Stage escenarioPrincipal )
+    public ButtonType mostrarMensajeConfirmacion(String titulo, String cabecera, String contenido, Stage escenarioPrincipal )
     {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.initOwner(escenarioPrincipal);
@@ -215,7 +218,6 @@ public class Principal extends Application {
 
         secondaryStage.setTitle("Comentarios");
         secondaryStage.setScene(scene);
-        secondaryStage.initModality(Modality.APPLICATION_MODAL);
         secondaryStage.showAndWait();
     }
 
@@ -262,5 +264,68 @@ public class Principal extends Application {
 
     public List<Publicacion> getTopPublicaciones() {
         return redSocial.getTopPublicaciones();
+    }
+
+    //====================Cargando GUI para chat====================
+    public void iniciarChat(Vendedor usuario1, Vendedor usuario2) {
+        BorderPane root = new BorderPane();
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(Principal.class.getResource("view/FlatBee.css").toExternalForm());
+
+        cargarVentanaChat(root, usuario1, usuario2);
+
+        secondaryStage.setTitle("Chat");
+        secondaryStage.setScene(scene);
+        secondaryStage.showAndWait();
+    }
+
+    private void cargarVentanaChat(BorderPane root, Vendedor usuario1, Vendedor usuario2) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("view/ChatView.fxml"));
+            AnchorPane view = loader.load();
+            ChatController controller = loader.getController();
+            controller.setPrincipal(this);
+            controller.setUsuarios(usuario1, usuario2);
+            root.setCenter(view);
+        } catch (IOException e) {
+            mostrarMensaje(Alert.AlertType.ERROR, "Error en la aplicacion", "Error cargando GUI",
+                    e.getMessage(), primaryStage);
+        }
+    }
+
+    public boolean enviarMensaje(String mensaje, Vendedor usuario1, Vendedor usuario2) {
+        boolean enviado = false;
+        try {
+            this.redSocial.agregarMensajeChat(mensaje, usuario1, usuario2);
+            enviado = true;
+        } catch (GrafoException | RedSocialException | ChatException e) {
+            mostrarMensaje(Alert.AlertType.ERROR, "Error en la aplicacion", "Error enviando mensaje",
+                    e.getMessage(), primaryStage);
+        }
+        return enviado;
+    }
+
+    public String getMensajesChat(Vendedor usuario1, Vendedor usuario2) {
+        String mensajes = "";
+        try {
+            mensajes = this.redSocial.getMensajesChatString(usuario1, usuario2);
+        } catch (RedSocialException e) {
+            mostrarMensaje(Alert.AlertType.ERROR, "Error en la aplicacion", "Error obteniendo mensajes",
+                    e.getMessage(), primaryStage);
+        }
+        return mensajes;
+    }
+
+    public void cantidadMensajesIntercambiados(Vendedor usuario1, Vendedor usuario2) {
+        try {
+            int cantidad = this.redSocial.getCantidadMensajesIntercambiados(usuario1, usuario2);
+            mostrarMensaje(Alert.AlertType.INFORMATION, "Mensajes intercambiados", "Cantidad de mensajes de chat enviados",
+                    usuario1.getNombreVendedor() + " y " + usuario2.getNombreVendedor() + " se han enviado " +
+                            cantidad + " mensaje(s).", primaryStage);
+        } catch (RedSocialException | GrafoException e) {
+            mostrarMensaje(Alert.AlertType.ERROR, "Error en la aplicacion", "Error obteniendo cantidad de mensajes",
+                    e.getMessage(), primaryStage);
+        }
     }
 }

@@ -18,7 +18,7 @@
                 </rowConstraints>
                 <children>
                     <ComboBox fx:id="vendedoresComboBoxContacto" prefWidth="300.0" promptText="Seleccione un vendedor" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" />
-                    <Button onAction="#actualizarContactos" mnemonicParsing="false" text="Actualizar" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" />
+                    <Button mnemonicParsing="false" onAction="#actualizarContactos" text="Actualizar" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" />
                     <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.hgrow="ALWAYS">
                         <children>
                             <Label text="Contactos en total: " />
@@ -30,7 +30,6 @@
             <TableView fx:id="contactosVendedorTableView" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                 <columns>
                     <TableColumn fx:id="nombreContactoColumn" prefWidth="75.0" text="Nombre" />
-                    <TableColumn fx:id="cantidadMensajesColumn" prefWidth="75.0" text="Cantidad de mensajes intercambiados" />
                 </columns>
                 <columnResizePolicy>
                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
