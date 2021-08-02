@@ -1,10 +1,12 @@
 package co.edu.estructuras.red.estructuras.grafo;
 
+import java.io.Serializable;
+
 /**
  * @author Stiven Herrera Sierra.
  * Representa la arista que conecta 2 vértices.
  */
-public class Enlace<T> {
+public class Enlace<T> implements Serializable {
 	private Nodo<T> nodoDestino;
 	private int peso;
 	

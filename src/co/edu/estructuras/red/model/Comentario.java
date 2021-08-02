@@ -1,10 +1,11 @@
 package co.edu.estructuras.red.model;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class Comentario {
-    private final DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
+public class Comentario implements Serializable {
+    private static final DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
     private String mensaje;
     private final Vendedor propietario;
     private final Publicacion publicacion;

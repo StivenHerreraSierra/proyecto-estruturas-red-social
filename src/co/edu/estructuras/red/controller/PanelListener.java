@@ -19,4 +19,8 @@ public interface PanelListener {
     List<Publicacion> getTopPublicaciones();
 
     void cantidadMensajesIntercambiados(Vendedor usuario1, Vendedor usuario2);
+
+    void guardarSesion();
+
+    void cargarSesion();
 }

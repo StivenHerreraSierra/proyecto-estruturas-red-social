@@ -1,6 +1,8 @@
 package co.edu.estructuras.red.model.exception;
 
-public class PublicacionException extends Exception {
+import java.io.Serializable;
+
+public class PublicacionException extends Exception implements Serializable {
     public PublicacionException(String msj) {
         super(msj);
     }

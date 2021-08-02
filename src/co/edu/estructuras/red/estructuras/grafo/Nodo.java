@@ -1,5 +1,6 @@
 package co.edu.estructuras.red.estructuras.grafo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import co.edu.estructuras.red.estructuras.exception.EnlaceException;
@@ -9,7 +10,7 @@ import co.edu.estructuras.red.estructuras.exception.NodoException;
  * @author Stiven Herrera Sierra.
  * Representa un nodo o vértice del grafo.
 */
-public class Nodo<T> {
+public class Nodo<T> implements Serializable {
 	private ArrayList<Enlace<T>> listaEnlaces;
 	private T valor;
 	

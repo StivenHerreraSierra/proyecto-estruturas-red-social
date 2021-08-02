@@ -3,14 +3,15 @@ package co.edu.estructuras.red.model;
 import co.edu.estructuras.red.estructuras.lista.ListaDoble;
 import co.edu.estructuras.red.model.exception.PublicacionException;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.chrono.ChronoLocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Iterator;
 
-public class Publicacion implements Comparable<Publicacion> {
-    private final DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+public class Publicacion implements Comparable<Publicacion>, Serializable {
+    private static final DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
     private final LocalDateTime fechaPublicacion;
     private Producto productoDePublicacion;
     private ListaDoble<Comentario> listaComentarios;

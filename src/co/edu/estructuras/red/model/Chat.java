@@ -3,7 +3,9 @@ package co.edu.estructuras.red.model;
 import co.edu.estructuras.red.estructuras.lista.ListaDoble;
 import co.edu.estructuras.red.model.exception.ChatException;
 
-public class Chat {
+import java.io.Serializable;
+
+public class Chat implements Serializable {
     private Vendedor usuario1;
     private Vendedor usuario2;
     private ListaDoble<String> mensajes;

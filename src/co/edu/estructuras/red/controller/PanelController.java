@@ -183,4 +183,15 @@ public class PanelController {
             System.err.println(e.getMessage());
         }
     }
+
+    //=================================Métodos para cargar y guardar sesión=================================
+    @FXML
+    public void guardarSesion() {
+        panelListener.guardarSesion();
+    }
+
+    @FXML
+    public void cargarSesion() {
+        panelListener.cargarSesion();
+    }
 }

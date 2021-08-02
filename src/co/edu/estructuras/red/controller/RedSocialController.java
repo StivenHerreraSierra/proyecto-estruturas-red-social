@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,6 +30,49 @@ public class RedSocialController {
         loadPanel();
     }
 
+    private PanelListener listener = new PanelListener() {
+        @Override
+        public void registrarListener(String nombreUsuario) {
+            registrarUsuario(nombreUsuario);
+        }
+
+        @Override
+        public int contarProductosFecha(LocalDate desde, LocalDate hasta) {
+            return principal.contarProductosFecha(desde, hasta);
+        }
+
+        @Override
+        public Grafo<Vendedor> getListaVendedores() {
+            return principal.getVendedores();
+        }
+
+        @Override
+        public Grafo<Vendedor> getListaContactos(Vendedor vendedor) {
+            return principal.getListaContactos(vendedor);
+        }
+
+        @Override
+        public List<Publicacion> getTopPublicaciones() {
+            return principal.getTopPublicaciones();
+        }
+
+        @Override
+        public void cantidadMensajesIntercambiados(Vendedor usuario1, Vendedor usuario2) {
+            principal.cantidadMensajesIntercambiados(usuario1, usuario2);
+        }
+
+        @Override
+        public void guardarSesion() {
+            principal.guardarSesion();
+        }
+
+        @Override
+        public void cargarSesion() {
+            if(principal.cargarSesion())
+                cargarMuroUsuarios();
+        }
+    };
+
     private void loadPanel(){
         try {
             Tab panelTab = new Tab();
@@ -38,37 +82,7 @@ public class RedSocialController {
             loader.setLocation(getClass().getResource("../view/PanelView.fxml"));
             AnchorPane view = loader.load();
             PanelController controller = loader.getController();
-            PanelListener listener = new PanelListener() {
-                @Override
-                public void registrarListener(String nombreUsuario) {
-                    registrarUsuario(nombreUsuario);
-                }
 
-                @Override
-                public int contarProductosFecha(LocalDate desde, LocalDate hasta) {
-                    return principal.contarProductosFecha(desde, hasta);
-                }
-
-                @Override
-                public Grafo<Vendedor> getListaVendedores() {
-                    return principal.getVendedores();
-                }
-
-                @Override
-                public Grafo<Vendedor> getListaContactos(Vendedor vendedor) {
-                    return principal.getListaContactos(vendedor);
-                }
-
-                @Override
-                public List<Publicacion> getTopPublicaciones() {
-                    return principal.getTopPublicaciones();
-                }
-
-                @Override
-                public void cantidadMensajesIntercambiados(Vendedor usuario1, Vendedor usuario2) {
-                    principal.cantidadMensajesIntercambiados(usuario1, usuario2);
-                }
-            };
             controller.setEventHandler(listener);
 
             panelTab.setContent(view);
@@ -78,11 +92,41 @@ public class RedSocialController {
         }
     }
 
+    private void cargarMuroUsuarios() {
+        Grafo<Vendedor> usuariosCargados = principal.getVendedores();
+        Iterator<Vendedor> it = usuariosCargados.iterator();
+
+        pestanasRedSocial.getTabs().clear();
+        loadPanel();
+
+        while(it.hasNext()) {
+            crearMuro(it.next());
+        }
+    }
+
     public void registrarUsuario(String nombre) {
         Vendedor vendedor = principal.registrarVendedor(nombre);
 
         if(vendedor != null)
             crearMuro(vendedor);
+    }
+
+    private void crearMuro(Vendedor vendedor) {
+        try {
+            Tab panelTab = new Tab();
+            panelTab.setText(vendedor.getNombreVendedor());
+
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("../view/VendedorTabView.fxml"));
+            AnchorPane view = loader.load();
+            VendedorTabController controller = loader.getController();
+            controller.VendedorTabInitializer(vendedor, muroListener, publicarListener);
+
+            panelTab.setContent(view);
+            pestanasRedSocial.getTabs().add(panelTab);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private VendedorTabListener muroListener = new VendedorTabListener() {
@@ -149,22 +193,4 @@ public class RedSocialController {
             return true;
         }
     };
-
-    private void crearMuro(Vendedor vendedor) {
-        try {
-            Tab panelTab = new Tab();
-            panelTab.setText(vendedor.getNombreVendedor());
-
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("../view/VendedorTabView.fxml"));
-            AnchorPane view = loader.load();
-            VendedorTabController controller = loader.getController();
-            controller.VendedorTabInitializer(vendedor, muroListener, publicarListener);
-
-            panelTab.setContent(view);
-            pestanasRedSocial.getTabs().add(panelTab);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }

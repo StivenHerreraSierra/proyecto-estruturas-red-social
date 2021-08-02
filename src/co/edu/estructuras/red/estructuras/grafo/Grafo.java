@@ -1,5 +1,6 @@
 package co.edu.estructuras.red.estructuras.grafo;
 
+import java.io.Serializable;
 import java.util.*;
 
 import co.edu.estructuras.red.estructuras.exception.GrafoException;
@@ -9,7 +10,7 @@ import co.edu.estructuras.red.estructuras.exception.NodoException;
  * @author Stiven Herrera Sierra.
  * Representa el grafo dirigido.
 */
-public class Grafo<T> implements Iterable<T>{
+public class Grafo<T> implements Iterable<T>, Serializable {
 	private HashMap<String, Nodo<T>> nodos;
 	private Nodo<T> raiz;
 	
@@ -233,7 +234,7 @@ public class Grafo<T> implements Iterable<T>{
 		return new GrafoIterator();
 	}
 
-	protected class GrafoIterator implements Iterator<T> {
+	protected class GrafoIterator implements Iterator<T>, Serializable {
 		ArrayList<Nodo<T>> valores = new ArrayList<>(nodos.values());
 		int indice = 0;
 

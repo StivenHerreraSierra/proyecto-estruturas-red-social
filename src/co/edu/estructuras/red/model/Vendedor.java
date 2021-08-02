@@ -6,9 +6,10 @@ import co.edu.estructuras.red.model.exception.ChatException;
 import co.edu.estructuras.red.model.exception.PublicacionException;
 import co.edu.estructuras.red.model.exception.VendedorException;
 
+import java.io.Serializable;
 import java.util.Iterator;
 
-public class Vendedor {
+public class Vendedor implements Serializable {
     private String nombreVendedor;
     private ArbolBinario<Producto> productos;
     private ArbolBinario<Publicacion> publicaciones;

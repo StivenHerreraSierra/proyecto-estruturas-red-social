@@ -1,12 +1,14 @@
 package co.edu.estructuras.red.estructuras.arbol;
 
+import java.io.Serializable;
+
 /**
  * Clase que representa un Nodo del �rbol binario
  * 
  *
  * @param <T>
  */
-public class Nodo<T extends Comparable<T>> {
+public class Nodo<T extends Comparable<T>> implements Serializable {
 
 	private Nodo<T> izquierdo, derecho;
 	private Nodo<T> padre;

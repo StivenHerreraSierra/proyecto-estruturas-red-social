@@ -10,6 +10,7 @@ import co.edu.estructuras.red.model.exception.PublicacionException;
 import co.edu.estructuras.red.model.exception.RedSocialException;
 import co.edu.estructuras.red.model.exception.VendedorException;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -17,7 +18,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Red {
+public class Red implements Serializable {
     private Grafo<Vendedor> vendedores;
 
     public Red () {

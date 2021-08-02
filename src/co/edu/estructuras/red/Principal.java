@@ -13,6 +13,8 @@ import co.edu.estructuras.red.model.exception.ChatException;
 import co.edu.estructuras.red.model.exception.PublicacionException;
 import co.edu.estructuras.red.model.exception.RedSocialException;
 import co.edu.estructuras.red.model.exception.VendedorException;
+import co.edu.estructuras.red.persistencia.Persistencia;
+import co.edu.estructuras.red.persistencia.exception.PersistenciaException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -20,9 +22,12 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import co.edu.estructuras.red.model.Red;
+
+import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
@@ -327,5 +332,34 @@ public class Principal extends Application {
             mostrarMensaje(Alert.AlertType.ERROR, "Error en la aplicacion", "Error obteniendo cantidad de mensajes",
                     e.getMessage(), primaryStage);
         }
+    }
+
+    public void guardarSesion() {
+        try {
+            FileChooser fc = new FileChooser();
+            fc.setTitle("Guardar sesión");
+            File ubicacion = fc.showSaveDialog(primaryStage);
+            Persistencia.writeObject(redSocial, ubicacion);
+        } catch (PersistenciaException | IOException e) {
+            mostrarMensaje(Alert.AlertType.ERROR, "Error en la aplicacion", "Error guardando sesion",
+                    e.getMessage(), primaryStage);
+            e.printStackTrace();
+        }
+    }
+
+    public boolean cargarSesion() {
+        boolean cargado = true;
+        try {
+            FileChooser fc = new FileChooser();
+            fc.setTitle("Guardar sesión");
+            File ubicacion = fc.showOpenDialog(primaryStage);
+            redSocial = (Red) Persistencia.readObject(ubicacion);
+        } catch (PersistenciaException | IOException | ClassNotFoundException e) {
+            cargado = false;
+            mostrarMensaje(Alert.AlertType.ERROR, "Error en la aplicacion", "Error cargando sesion",
+                    e.getMessage(), primaryStage);
+            e.printStackTrace();
+        }
+        return cargado;
     }
 }

@@ -102,6 +102,13 @@
                             </padding></AnchorPane>
                     </content>
                 </ScrollPane>
+            <HBox alignment="CENTER_LEFT" prefHeight="25.0" prefWidth="840.0" spacing="20.0">
+               <children>
+                  <Label text="Sesion:" />
+                  <Button onAction="#cargarSesion" mnemonicParsing="false" prefWidth="80.0" text="Cargar" />
+                  <Button onAction="#guardarSesion" mnemonicParsing="false" prefWidth="80.0" text="Guardar" />
+               </children>
+            </HBox>
             </children>
         </VBox>
     </children>

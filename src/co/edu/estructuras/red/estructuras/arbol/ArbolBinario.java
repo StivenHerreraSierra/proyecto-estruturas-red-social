@@ -2,6 +2,7 @@ package co.edu.estructuras.red.estructuras.arbol;
 
 import co.edu.estructuras.red.estructuras.exception.NodoException;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -13,7 +14,7 @@ import java.util.Queue;
  *
  * @param <T>
  */
-public class ArbolBinario<T extends Comparable<T>> implements Iterable<T> {
+public class ArbolBinario<T extends Comparable<T>> implements Iterable<T>, Serializable {
 
 	private Nodo<T> raiz;
 	private int peso;
@@ -486,7 +487,7 @@ public class ArbolBinario<T extends Comparable<T>> implements Iterable<T> {
 		return new ArbolIterator();
 	}
 
-	protected class ArbolIterator implements Iterator<T> {
+	protected class ArbolIterator implements Iterator<T>, Serializable {
 		ArrayList<T> valores = getListaInorden();
 		int indice = 0;
 
