@@ -7,18 +7,13 @@ import co.edu.estructuras.red.model.Publicacion;
 import co.edu.estructuras.red.model.Vendedor;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
 
 public class RedSocialController {
     private Principal principal;

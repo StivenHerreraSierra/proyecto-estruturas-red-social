@@ -30,7 +30,7 @@ public class Red implements Serializable {
             throw new RedSocialException("Error registrando un vendedor: nombre no puede tener un valor vacio.");
 
 
-        if(vendedores.size() > 10)
+        if(vendedores.size() > 9)
             throw new RedSocialException("Error registrando contacto: la red ya alcanzo los 10 usuarios.");
         Vendedor vendedor = new Vendedor(nombre);
         vendedores.agregarNodo(vendedor);
