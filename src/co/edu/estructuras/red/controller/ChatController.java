@@ -9,6 +9,9 @@ import javafx.scene.control.TextArea;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * @author Stiven Herrera Sierra
+ */
 public class ChatController {
     @FXML
     private TextArea mensajesArea;

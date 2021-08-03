@@ -33,6 +33,9 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * @author Stiven Herrera Sierra
+ */
 public class Principal extends Application {
     private BorderPane root;
     private Stage primaryStage;

@@ -2,6 +2,9 @@ package co.edu.estructuras.red.model;
 
 import java.io.Serializable;
 
+/**
+ * @author Stiven Herrera Sierra
+ */
 public class Producto implements Comparable<Producto>, Serializable {
     private String categoriaProducto;
     private String nombreProducto;

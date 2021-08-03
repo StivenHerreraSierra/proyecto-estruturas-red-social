@@ -14,6 +14,9 @@ import javafx.scene.layout.VBox;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * @author Stiven Herrera Sierra
+ */
 public class VendedorTabController {
     private Vendedor usuario;
     @FXML

@@ -3,9 +3,10 @@ package co.edu.estructuras.red.persistencia;
 import co.edu.estructuras.red.persistencia.exception.PersistenciaException;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
+/**
+ * @author Stiven Herrera Sierra
+ */
 public class Persistencia {
     /**
      * Escribe en un archivo .bin el objeto que recibe.

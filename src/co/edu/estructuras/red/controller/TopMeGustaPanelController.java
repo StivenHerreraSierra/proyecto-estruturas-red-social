@@ -1,6 +1,5 @@
 package co.edu.estructuras.red.controller;
 
-import co.edu.estructuras.red.estructuras.arbol.ArbolBinario;
 import co.edu.estructuras.red.model.Publicacion;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
@@ -9,6 +8,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
+/**
+ * @author Stiven Herrera Sierra
+ */
 public class TopMeGustaPanelController {
     @FXML
     private TableView<Publicacion> publicacionesTableView;

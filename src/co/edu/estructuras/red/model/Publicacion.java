@@ -10,6 +10,9 @@ import java.time.chrono.ChronoLocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Iterator;
 
+/**
+ * @author Stiven Herrera Sierra
+ */
 public class Publicacion implements Comparable<Publicacion>, Serializable {
     private static final DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
     private final LocalDateTime fechaPublicacion;

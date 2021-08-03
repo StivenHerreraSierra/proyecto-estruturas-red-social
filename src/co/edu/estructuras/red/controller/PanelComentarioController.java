@@ -7,6 +7,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 
+/**
+ * @author Stiven Herrera Sierra
+ */
 public class PanelComentarioController {
     @FXML
     private TextArea comentariosTextArea;

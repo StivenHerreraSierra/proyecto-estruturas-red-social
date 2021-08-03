@@ -18,6 +18,9 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * @author Stiven Herrera Sierra
+ */
 public class PanelController {
     @FXML
     private TextField nombreTFD;

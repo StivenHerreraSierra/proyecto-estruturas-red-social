@@ -15,6 +15,9 @@ import java.time.LocalDate;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * @author Stiven Herrera Sierra
+ */
 public class RedSocialController {
     private Principal principal;
     @FXML

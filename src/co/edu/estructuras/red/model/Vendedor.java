@@ -9,6 +9,9 @@ import co.edu.estructuras.red.model.exception.VendedorException;
 import java.io.Serializable;
 import java.util.Iterator;
 
+/**
+ * @author Stiven Herrera Sierra
+ */
 public class Vendedor implements Serializable {
     private String nombreVendedor;
     private ArbolBinario<Producto> productos;

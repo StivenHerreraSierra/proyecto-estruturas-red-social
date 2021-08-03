@@ -4,7 +4,6 @@ import co.edu.estructuras.red.estructuras.arbol.ArbolBinario;
 import co.edu.estructuras.red.estructuras.grafo.Grafo;
 import co.edu.estructuras.red.estructuras.exception.GrafoException;
 import co.edu.estructuras.red.estructuras.exception.NodoException;
-import co.edu.estructuras.red.estructuras.lista.ListaDoble;
 import co.edu.estructuras.red.model.exception.ChatException;
 import co.edu.estructuras.red.model.exception.PublicacionException;
 import co.edu.estructuras.red.model.exception.RedSocialException;
@@ -13,11 +12,13 @@ import co.edu.estructuras.red.model.exception.VendedorException;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * @author Stiven Herrera Sierra
+ */
 public class Red implements Serializable {
     private Grafo<Vendedor> vendedores;
 

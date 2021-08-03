@@ -1,8 +1,10 @@
 package co.edu.estructuras.red.controller;
 
 import co.edu.estructuras.red.model.Publicacion;
-import co.edu.estructuras.red.model.Vendedor;
 
+/**
+ * @author Stiven Herrera Sierra
+ */
 public interface PublicacionListener {
     public boolean darMeGusta(Publicacion publicacion);
 

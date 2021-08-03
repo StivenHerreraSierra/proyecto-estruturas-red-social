@@ -5,6 +5,9 @@ import co.edu.estructuras.red.model.exception.ChatException;
 
 import java.io.Serializable;
 
+/**
+ * @author Stiven Herrera Sierra
+ */
 public class Chat implements Serializable {
     private Vendedor usuario1;
     private Vendedor usuario2;

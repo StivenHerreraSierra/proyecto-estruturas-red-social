@@ -7,6 +7,9 @@ import co.edu.estructuras.red.model.Vendedor;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * @author Stiven Herrera Sierra
+ */
 public interface PanelListener {
     void registrarListener(String nombreUsuario);
 

@@ -5,6 +5,9 @@ import co.edu.estructuras.red.estructuras.grafo.Grafo;
 import co.edu.estructuras.red.model.Publicacion;
 import co.edu.estructuras.red.model.Vendedor;
 
+/**
+ * @author Stiven Herrera Sierra
+ */
 public interface VendedorTabListener {
     public Grafo<Vendedor> actualizarListaTodos(Vendedor usuario);
 
